@@ -1,0 +1,112 @@
+# CLAUDE.md — Project Instructions
+
+> Replace this file's contents with your project specifics. Keep the
+> `## Pilot Suite Rules` section to load the suite.
+
+---
+
+## About This Project
+
+<Brief project description: what it does, key tech stack, who maintains it.>
+
+**Judgement framework** (used to break ties):
+- <e.g. "performance > simplicity", "security > convenience", "test coverage > shipping speed">
+- <add your team's actual priorities>
+
+**Core domains**:
+- <e.g. "auth & RBAC", "API rate limiting", "data pipeline">
+
+---
+
+## Loading Strategy
+
+This CLAUDE.md auto-loads on every session. Six rule files are pinned via `@-import` below; on-demand SKILLs (in `.claude/skills/*/SKILL.md`) load only when triggered.
+
+For task-specific knowledge that doesn't need to load every session, write it as a SKILL with a clear trigger phrase rather than inlining here.
+
+---
+
+## Core Workflow
+
+**Git flow + assumption disclosure + sub-agent delegation**: see auto-loaded rules below.
+
+**Complex tasks / unclear starting point**: dispatch a planning agent first, then execute.
+
+**Verification commands** (replace with your actual ones):
+```bash
+# Workspace integrity check
+<your-healthcheck-script>
+
+# Pre-commit verification
+git status && git diff --stat
+```
+
+---
+
+## Pilot Suite Rules (auto-loaded)
+
+These are the always-on baseline rules. They establish:
+- Language / Git workflow / surgical-changes discipline (`core.md`)
+- Sub-agent delegation criteria + advisor mode (`subagent-strategy.md`)
+- Context window monitoring + compact strategy (`context-management.md`)
+- Plain-text output formatting (`output-discipline.md`)
+- Mode switching + escalation gates for both pilot modes (`haiku-pilot.md`, `sonnet-pilot.md`)
+
+```
+@.claude/rules/core.md
+@.claude/rules/subagent-strategy.md
+@.claude/rules/context-management.md
+@.claude/rules/output-discipline.md
+@.claude/rules/haiku-pilot.md
+@.claude/rules/sonnet-pilot.md
+```
+
+> **On-demand loading** (trigger phrases listed in each rule's `Do NOT use for` block):
+> - `Plan Mode` / `test strategy` / `large-scale refactor` → load `<your-quality-rule>` if you have one
+> - `security incident` / `credentials` / `secrets` → load your security rules
+>
+> Long-running tasks: track in `claude-progress.json`; session-start/stop hooks read/write.
+
+---
+
+## Pilot Modes (this suite's main offering)
+
+**Default**: Haiku Pilot (cost-first). Trigger explicit switch: `/sonnet-pilot` for quality-first.
+
+**When to use which**:
+- **Haiku Pilot**: routine code edits, surgical bug fixes, doc updates, single-file research
+- **Sonnet Pilot**: cross-module implementation, multi-step architecture work, security design, anything you'd normally reach for Opus
+
+**Both modes escalate to Opus only on quantitative gates** (see `haiku-pilot.md` § Escalation Gates and `sonnet-pilot.md` § Escalation Gate).
+
+---
+
+## Personal Preferences (customize)
+
+- <e.g. "When presenting multiple options, mark the recommended one and explain core tradeoff">
+- <e.g. "Prefer shell scripts over Python for simple automation; Python for anything > 100 LoC">
+- <e.g. "Always run linter before declaring 'done'">
+
+---
+
+## Workspace-Specific Documentation (manual Read)
+
+- `<your-architecture-doc>` — high-level architecture
+- `<your-runbook>` — incident response
+- `<your-decision-log>` — past architecture decisions
+
+> Index of all SKILLs: see `.claude/skills/` (or your custom RESOLVER.md if you have one).
+
+---
+
+## Production Safety Markers (REQUIRED — customize)
+
+The `core.md` § "Production Safety Red Line" rule enforces second confirmation for production operations. Define your concrete markers here so the rule has something to match against:
+
+- **Branches**: `main`, `production`
+- **Namespaces**: `prod`, `production`
+- **Project IDs**: anything matching `*-prod` or `prod-*`
+- **IaC workspaces**: `production`
+- **Env variable**: `ENV=production` / `NODE_ENV=production`
+
+Edit `rules/core.md` § Production Safety Red Line to reference these specifically.
