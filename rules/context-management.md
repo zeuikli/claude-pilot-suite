@@ -5,10 +5,6 @@ tier: auto
 
 # Context Window Management
 
-## Theoretical Anchor
-
-**Context Engineering** (Karpathy 2025-06-25) = "filling the context window with just the right information for the next step". It cuts both ways: too little / wrong format → underperformance; too much / irrelevant → rising cost and degraded quality. Archived: `research/tweets/2025-06-25-@karpathy-607626.md`.
-
 ## Monitoring
 
 - `/usage` — view session token/cost in real time.
