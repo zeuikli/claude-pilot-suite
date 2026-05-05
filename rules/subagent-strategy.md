@@ -36,30 +36,23 @@ By independent file count:
 
 ---
 
-## Sub-Agent Dispatch Table (TEMPLATE — customize for your workspace)
+## Sub-Agent Dispatch Table
 
-> **This is a starter template.** Replace agent names with the agents that exist in your `.claude/agents/` directory. The model column reflects our defaults; adjust based on your cost/quality preferences.
+> Agent types below are Claude Code built-ins — always available without any `.claude/agents/` setup. Add custom agents to override rows as your workspace grows.
 
 | Scenario | Suggested agent type | Suggested model |
 |----------|---------------------|-----------------|
-| Research / > 10 files | `researcher` / `architecture-explorer` | Haiku 4.5 |
+| Research / > 10 files / locate symbols | `Explore` | Haiku 4.5 |
 | 3+ independent subtasks | dispatch multiple in one message | — |
-| Surgical code edit (single file ≤ 30 LoC, explicit path, no design decision) | `haiku-implementer` | Haiku 4.5 |
-| Cross-module / > 30 LoC / requires design judgment | `implementer` | Sonnet 4.6 |
-| Test writing (boundary cases + mocks) | `test-writer` | Sonnet 4.6 |
-| Quick pre-commit security check | `security-reviewer` | Sonnet 4.6 |
-| OWASP / proactive threat modeling | `security-auditor` | Sonnet 4.6 |
-| Architecture decision / tech selection | `reviewer` | Opus 4.7 |
+| Surgical code edit (single file ≤ 30 LoC, explicit path, no design decision) | `general-purpose` | Haiku 4.5 |
+| Cross-module / > 30 LoC / requires design judgment | `general-purpose` | Sonnet 4.6 |
+| Test writing (boundary cases + mocks) | `general-purpose` | Sonnet 4.6 |
+| Quick pre-commit security check | `general-purpose` | Sonnet 4.6 |
+| OWASP / proactive threat modeling | `general-purpose` | Sonnet 4.6 |
+| Architecture decision / implementation plan | `Plan` | Opus 4.7 |
 | Pre-commit multi-dimension review | `/deep-review` skill | mixed |
 
-**How to customize**:
-
-1. List your actual agents: `ls .claude/agents/`
-2. For each row above, replace the suggested agent name with one of yours (or note "no equivalent" and consider building one)
-3. Adjust the model column if your team prefers a different cost/quality balance
-4. Delete rows that don't apply to your work (e.g. no security focus → drop security rows)
-
-If you don't have specialized agents yet, the `general-purpose` agent (always available) accepts a `model` override and works as a fallback for all rows.
+**To add custom agents**: create `.claude/agents/<name>/agent.md` and replace the `general-purpose` rows with your specialized agents for tighter scope and lower token cost.
 
 ---
 
