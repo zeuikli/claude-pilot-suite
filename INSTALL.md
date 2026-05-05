@@ -160,14 +160,14 @@ If you skip customization, the suite still works but with degraded specificity (
 
 ## Uninstall
 
-For Method 1 (symlink):
+For Method 2 (symlink):
 ```bash
 rm .claude/rules/{core,subagent-strategy,context-management,output-discipline,haiku-pilot,sonnet-pilot}.md
 rm -r .claude/skills/{haiku,sonnet}-pilot
 # Remove the @-imports from CLAUDE.md
 ```
 
-For Methods 2/3, delete the copied files / subtree.
+For Methods 3/4, delete the copied files / subtree.
 
 ---
 
