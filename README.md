@@ -37,6 +37,7 @@ claude-pilot-suite/
 │   └── CLAUDE.md.template            Sample CLAUDE.md to integrate the suite
 ├── README.md
 ├── INSTALL.md
+├── RELEASING.md
 └── LICENSE
 ```
 
@@ -102,17 +103,17 @@ Quick version:
 ```bash
 # Clone next to your project, then symlink
 git clone https://github.com/zeuikli/claude-pilot-suite.git
-ln -s "$(pwd)/claude-pilot-suite/rules" ~/your-project/.claude/rules-pilot
+ln -s "$(pwd)/claude-pilot-suite/rules" ~/your-project/.claude/rules
 ln -s "$(pwd)/claude-pilot-suite/skills/haiku-pilot" ~/your-project/.claude/skills/haiku-pilot
 ln -s "$(pwd)/claude-pilot-suite/skills/sonnet-pilot" ~/your-project/.claude/skills/sonnet-pilot
 
 # Then update your project's CLAUDE.md to @-import the rules:
-# @.claude/rules-pilot/core.md
-# @.claude/rules-pilot/subagent-strategy.md
-# @.claude/rules-pilot/context-management.md
-# @.claude/rules-pilot/output-discipline.md
-# @.claude/rules-pilot/haiku-pilot.md
-# @.claude/rules-pilot/sonnet-pilot.md
+# @.claude/rules/core.md
+# @.claude/rules/subagent-strategy.md
+# @.claude/rules/context-management.md
+# @.claude/rules/output-discipline.md
+# @.claude/rules/haiku-pilot.md
+# @.claude/rules/sonnet-pilot.md
 ```
 
 See `examples/CLAUDE.md.template` for a complete example.
