@@ -6,7 +6,7 @@ description: |
   near-Opus quality on most tasks. Escalate to Sonnet/Opus only when gates
   trigger.
   Triggers: "Haiku mode", "haiku-pilot", "use Haiku", "save tokens with quality",
-  "Haiku 模式", "全力 Haiku", "升級判斷", "節費執行".
+  "full Haiku", "max Haiku", "escalation judgment", "cost-saving execution".
 
   Do NOT use for: cost-only token optimization, file-count cognitive heuristic,
   agent dispatch table, CLAUDE.md / rules audit, harness health check.

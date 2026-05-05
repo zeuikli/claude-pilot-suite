@@ -5,7 +5,7 @@ description: |
   and forced self-review loops, get Sonnet 4.6 to produce code/doc quality on par
   with Opus 4.7. Escalate to Opus only when quantitative gates trigger.
   Triggers: "Sonnet mode", "sonnet-pilot", "quality first", "approach Opus quality",
-  "Sonnet 模式", "全力 Sonnet", "品質優先", "接近 Opus".
+  "full Sonnet", "max Sonnet", "prioritize quality", "close to Opus".
 
   Do NOT use for: pure cost optimization, file-count cognitive heuristic,
   agent dispatch table, CLAUDE.md / rules audit, harness health check,
