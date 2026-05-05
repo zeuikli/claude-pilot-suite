@@ -20,6 +20,9 @@ Built on the empirical finding that **prompt structure + sub-agent delegation of
 
 ```
 claude-pilot-suite/
+├── .claude-plugin/
+│   └── plugin.json                  Plugin manifest (loadable via /plugin install)
+├── CHANGELOG.md
 ├── rules/                          # Auto-loaded baseline discipline
 │   ├── core.md                       Language / Git / surgical changes / quality
 │   ├── subagent-strategy.md          Sub-agent delegation criteria + advisor mode
@@ -90,7 +93,9 @@ The suite is the synthesis of 4 benchmark iterations measuring how prompt struct
 
 ## Install
 
-See `INSTALL.md` for three installation methods (clone+symlink / copy / subtree).
+This bundle is **hybrid**: SKILLs load via Claude Code's plugin mechanism (`.claude-plugin/plugin.json`), while rules load via `@-import` from your CLAUDE.md (rules are not yet plugin-supported).
+
+See `INSTALL.md` for the four installation methods (plugin install / clone+symlink / copy / git subtree).
 
 Quick version:
 

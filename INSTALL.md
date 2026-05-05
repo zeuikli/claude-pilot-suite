@@ -1,10 +1,32 @@
 # Installation
 
-Three install methods, ordered by ongoing maintenance cost.
+Four install methods, ordered by Claude Code idiomatic-ness.
+
+> **Hybrid bundle note**: SKILLs (in `skills/`) load via Claude Code's plugin mechanism. Rules (in `rules/`) load via `@-import` from your project CLAUDE.md — rules are not yet plugin-supported, so they require copy/symlink. All four methods install both.
 
 ---
 
-## Method 1: clone + symlink (recommended)
+## Method 1: plugin install + rules copy (recommended for SKILLs)
+
+Best for: trying the SKILLs first without committing to file-level integration; lets Claude Code's `/plugin` system manage SKILL lifecycle.
+
+```bash
+# 1. SKILLs via plugin install (manages skills/haiku-pilot + skills/sonnet-pilot)
+/plugin install <path-or-url-to-claude-pilot-suite>
+
+# 2. Rules still need copy (rules/ is not plugin-supported)
+cd ~/your-project
+mkdir -p .claude/rules
+cp <path-to-claude-pilot-suite>/rules/*.md .claude/rules/
+
+# 3. Wire rules into CLAUDE.md (see Wire rules section below)
+```
+
+> The plugin manifest at `.claude-plugin/plugin.json` registers `name: claude-pilot-suite` and the SKILLs are auto-discovered by Claude Code from the plugin's `skills/` directory.
+
+---
+
+## Method 2: clone + symlink (recommended)
 
 Best for: ongoing updates, contributing back, having one canonical pilot suite shared across multiple projects.
 
@@ -42,7 +64,7 @@ All your projects pick up the new version on their next session — no per-proje
 
 ---
 
-## Method 2: copy (no auto-update)
+## Method 3: copy (no auto-update)
 
 Best for: starter usage, customizing without diverging from upstream concerns, projects that want vendoring.
 
@@ -63,7 +85,7 @@ You're free to modify any file. To pull future updates, manually re-copy the fil
 
 ---
 
-## Method 3: git subtree (vendored, traceable)
+## Method 4: git subtree (vendored, traceable)
 
 Best for: monorepos, projects that want suite under their own VCS history without external dependency.
 
