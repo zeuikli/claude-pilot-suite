@@ -164,7 +164,7 @@ If you don't have specialized agents, the `general-purpose` agent (always availa
 - Anthropic Claude Code conventions (`AGENTS.md` cross-tool root manifest)
 - 4-iteration internal benchmark (5/3 baseline → v1 mode-declaration → v2 asymmetric → v3 symmetric)
 
-Originally part of [`cc-workspace`](https://github.com/zeuikli/cc-workspace) — split out via `git subtree` into this standalone repo for plugin distribution. The `dist/claude-pilot-suite/` directory in cc-workspace is the source of truth; this repo is the published mirror.
+Originally part of [`cc-workspace`](https://github.com/zeuikli/cc-workspace) — split out via `git subtree` for plugin distribution. The `dist/claude-pilot-suite/` directory in cc-workspace is the source of truth; the standalone repo at <https://github.com/zeuikli/claude-pilot-suite> is the published mirror. See `RELEASING.md` for the publish flow.
 
 ---
 
