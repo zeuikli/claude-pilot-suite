@@ -159,7 +159,49 @@ Add custom agents in `.claude/agents/<name>/agent.md` to replace `general-purpos
 
 This bundle is **hybrid**: SKILLs load via Claude Code's plugin mechanism; rules load via `@-import` from your CLAUDE.md. See `INSTALL.md` for all four methods and troubleshooting.
 
-**Method 2 (clone + symlink) — recommended for ongoing updates:**
+### Method 1: plugin install (quickest)
+
+Run inside Claude Code:
+
+```
+/plugin install https://github.com/zeuikli/claude-pilot-suite
+```
+
+Or from a local clone:
+
+```
+/plugin install /path/to/claude-pilot-suite
+```
+
+The plugin manager installs both SKILLs automatically. Rules still need to be wired manually (see step 2 below) — this is a Claude Code limitation, not a bug.
+
+**Step 2 — wire rules into your project's `CLAUDE.md`:**
+
+```bash
+# Copy rule files into your project
+cd ~/your-project
+mkdir -p .claude/rules
+cp /path/to/claude-pilot-suite/rules/*.md .claude/rules/
+```
+
+Then add to your `CLAUDE.md`:
+
+```markdown
+## Pilot Suite Rules (auto-loaded)
+
+@.claude/rules/core.md
+@.claude/rules/subagent-strategy.md
+@.claude/rules/context-management.md
+@.claude/rules/output-discipline.md
+@.claude/rules/haiku-pilot.md
+@.claude/rules/sonnet-pilot.md
+```
+
+**Verify**: in a fresh Claude Code session, type `haiku-pilot` or `sonnet-pilot` — Claude should acknowledge the mode switch and load the SKILL playbook. Skills are also invocable directly as `/claude-pilot-suite:haiku-pilot` and `/claude-pilot-suite:sonnet-pilot`.
+
+---
+
+### Method 2: clone + symlink (recommended for ongoing updates)
 
 ```bash
 # Clone once to a shared location
