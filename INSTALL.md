@@ -140,9 +140,8 @@ See `examples/CLAUDE.md.template` for a full example with explanations.
 
 In a fresh Claude Code session, type:
 
-```
-/haiku-pilot
-```
+- `haiku-pilot` — activates Haiku Pilot (cost-first mode)
+- `sonnet-pilot` — activates Sonnet Pilot (quality-first mode)
 
 You should see Claude acknowledge mode switch + load the SKILL playbook. Try a task; pre-flight should fire.
 
@@ -184,7 +183,7 @@ Check:
 ### "Triggers" don't activate the SKILL
 
 The pilot SKILLs are on-demand (loaded by trigger phrase). Required:
-- Trigger phrase is in the message (e.g. `/haiku-pilot` or "Haiku 模式")
+- Trigger phrase is in the message (e.g. `haiku`, `haiku-pilot`, `haiku mode`, `sonnet`, `sonnet-pilot`, `sonnet mode`)
 - The SKILL directory exists at `.claude/skills/<skill-name>/SKILL.md`
 - The SKILL frontmatter parses (no syntax errors)
 
