@@ -211,7 +211,7 @@ Savings: 1 - 6/45 = 86.7%
 
 ---
 
-## Verification
+## External Verification (no self-evaluation)
 
 | Hypothesis | How to verify |
 |-----------|---------------|
@@ -220,7 +220,7 @@ Savings: 1 - 6/45 = 86.7%
 | Actually saving 70–85%? | Use your cost tracking tool; compare to baseline |
 | Citation Anchor (Pre-flight #4) compliance | Pre-completion grep on Haiku-completed answer files: `grep -cE "Step [0-9]+\|anti-pattern #[0-9]+\|:[0-9]+-[0-9]+" <answer_file>` ≥ 1 per 200 words. If not, retry to fix. |
 
-> Don't trust LLM self-evaluation. External tool verification is the basis.
+> **Generator ≠ Evaluator**: every row above requires an *external* signal — `/deep-review` scoring (separate agent), cost-tracking tooling (your billing dashboard), or `grep` over written files. Do NOT ask the same Claude session that produced the answer to grade itself; a passing self-test is not evidence of quality, only evidence the test doesn't check what the question checks.
 
 ---
 

@@ -1,27 +1,32 @@
-# 輸出紀律規則（Output Discipline）
+---
+description: Output discipline — no fluff / no preamble / scannable lists (auto-loaded)
+tier: auto
+---
 
-> 實測：英文 -80.6%、繁中 -86.2% 輸出 token，LLM Judge 品質無衰退（T-B/T-C/T-D 驗證 2026-04-30）。靜態內容，cache 後邊際成本近零。
+# Output Discipline
 
-## 核心輸出規則
+> Measured: -80.6% output tokens in English, -86.2% in Traditional Chinese, with no LLM-Judge quality regression (T-B/T-C/T-D verified 2026-04-30). Static content — once cached, marginal cost is near zero.
 
-- **無開場白**：不說「當然」「好的」「以下是」等 — 佔 token 不傳遞資訊。
-- **不重述問題**：直接給答案，跳過「您問的問題是...」「根據您的需求...」。
-- **精簡句式**：能用要點清單就不用散文 — 掃視效率高、token 密度高。
-- **程式碼極簡**：只有非顯而易見的邏輯才加 comment — 好的命名比 comment 清楚。
-- **長度上限**：純文字回答 ≤ 150 字（code block 為主體時例外）— 過長易離題。
-- **填充語禁止**：just / really / basically / it's worth noting / as you can see / 值得注意的是 / 如您所見 / 事實上 — 純輸出膨脹。
+## Core Output Rules
 
-繁中回答同樣適用；規則為行為約束，不做 CJK token pruning。
+- **No preamble**: do not open with "Sure", "Of course", "Here is", or equivalents — they consume tokens without conveying information.
+- **No question restatement**: go straight to the answer; skip "You asked about..." / "Based on your request...".
+- **Prefer scannable lists over prose**: higher visual scan efficiency, higher token density.
+- **Minimal code comments**: comment only non-obvious logic — good naming beats comments.
+- **Length cap**: plain-text answers ≤ 150 words (exception: responses where a code block is the primary body).
+- **Banned filler words**: just / really / basically / it's worth noting / as you can see / in fact / actually — pure output inflation.
 
-## 例外情況
+These rules apply regardless of the response language; they are behavioral constraints, not language-specific token pruning.
 
-- 使用者明確要求「詳細解釋」「完整說明」「逐步說明」→ 放寬長度限制，但仍禁止開場白與填充語
-- 教學性內容（如技術文章、文件草稿）→ 散文形式可接受，但仍去除冗詞
-- 使用者語氣輕鬆隨意時 → 可以加入一句話回應確認，但不要多行鋪陳
+## Exceptions
+
+- User explicitly requests "detailed explanation" / "full walkthrough" / "step by step" → relax length cap, but preamble and filler words are still banned.
+- Instructional content (e.g. technical articles, document drafts) → prose is acceptable, but still trim filler.
+- Casual conversational tone from the user → a single-sentence acknowledgment is fine; multi-line preambles are not.
 
 ## Known Gotchas
 
-- 修改此檔 mid-session 會讓 prompt cache prefix 失效（cache_read 歸零）；session 結束後再改，下次 session 重建 cache。
-- 「150 字上限」僅適用純文字回答；含 code block 的回答不受此限。
-- **填充語禁止清單非絕對**：是信號非硬規。技術回答可能需要「just」精準措辭；追求簡潔時優先檢查邏輯緊密度，而非砍詞。
-- **CJK token 估算不準**：繁中 2-3 token/字 ≠ 英文 4 bytes/token。150 字英文上限可容 300+ 中字；用 `/usage` 實測，而非推估。
+- Editing this file mid-session invalidates the prompt cache prefix (cache_read drops to zero). Edit after the session ends; the next session rebuilds the cache.
+- The 150-word cap applies to plain-text answers only; responses where a code block is the primary body are exempt.
+- **The banned-filler list is a signal, not a hard rule.** Technical answers may legitimately need "just" for precision; prioritize logical density over word-count policing.
+- **CJK token estimates are unreliable**: Traditional Chinese runs 2–3 tokens/character vs ~4 bytes/token for English. The 150-word English cap accommodates 300+ CJK characters. Use `/usage` to measure; don't estimate.

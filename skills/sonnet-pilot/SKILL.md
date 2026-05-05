@@ -187,7 +187,7 @@ Quality target: Sonnet + good context ≈ Opus baseline; when Opus does fire, it
 
 ---
 
-## Verification
+## External Verification (no self-evaluation)
 
 | Hypothesis | How to verify |
 |-----------|---------------|
@@ -196,7 +196,7 @@ Quality target: Sonnet + good context ≈ Opus baseline; when Opus does fire, it
 | 55–65% savings? | Use your cost tracking tool; compare monthly |
 | Decision-Log compliance | Grep completion answer files: `grep -c "Choice:\|Rejected:" <output_file>` ≥ 1 per non-obvious decision |
 
-> Don't trust LLM self-evaluation. External tool verification is the basis.
+> **Generator ≠ Evaluator**: every row above requires an *external* signal — `/deep-review` scoring (separate agent), cost-tracking tooling (your billing dashboard), or `grep` over written files. Do NOT ask the same Claude session that produced the answer to grade itself; a passing self-test is not evidence of quality, only evidence the test doesn't check what the question checks.
 
 ---
 

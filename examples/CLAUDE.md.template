@@ -49,7 +49,7 @@ These are the always-on baseline rules. They establish:
 - Language / Git workflow / surgical-changes discipline (`core.md`)
 - Sub-agent delegation criteria + advisor mode (`subagent-strategy.md`)
 - Context window monitoring + compact strategy (`context-management.md`)
-- Plain-text output formatting (`output-discipline.md`)
+- Plain-text output formatting — no fluff / no preamble / scannable lists (`output-discipline.md`)
 - Mode switching + escalation gates for both pilot modes (`haiku-pilot.md`, `sonnet-pilot.md`)
 
 ```
