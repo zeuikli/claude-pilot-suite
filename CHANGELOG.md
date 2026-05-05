@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.1.1] - 2026-05-05
+
+### Changed
+
+- Migrated to standalone repo `zeuikli/claude-pilot-suite` (split via `git subtree split --prefix=dist/claude-pilot-suite`); cc-workspace `dist/claude-pilot-suite/` now serves as the source of truth, this repo as the published mirror.
+- Updated all installation URLs from `<your-fork>` placeholder to canonical `zeuikli/claude-pilot-suite`.
+- Added `repository` field to `.claude-plugin/plugin.json` for plugin tooling discovery.
+
+### Fixed
+
+- Plugin manifest `homepage` now points to standalone repo root rather than cc-workspace subdirectory.
+
 ## [0.1.0] - 2026-05-04
 
 ### Added

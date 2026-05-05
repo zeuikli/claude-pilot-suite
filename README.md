@@ -101,7 +101,7 @@ Quick version:
 
 ```bash
 # Clone next to your project, then symlink
-git clone https://github.com/<your-fork>/claude-pilot-suite.git
+git clone https://github.com/zeuikli/claude-pilot-suite.git
 ln -s "$(pwd)/claude-pilot-suite/rules" ~/your-project/.claude/rules-pilot
 ln -s "$(pwd)/claude-pilot-suite/skills/haiku-pilot" ~/your-project/.claude/skills/haiku-pilot
 ln -s "$(pwd)/claude-pilot-suite/skills/sonnet-pilot" ~/your-project/.claude/skills/sonnet-pilot
@@ -164,7 +164,7 @@ If you don't have specialized agents, the `general-purpose` agent (always availa
 - Anthropic Claude Code conventions (`AGENTS.md` cross-tool root manifest)
 - 4-iteration internal benchmark (5/3 baseline → v1 mode-declaration → v2 asymmetric → v3 symmetric)
 
-Originally part of `cc-workspace` — extracted as portable plugin pack for community use.
+Originally part of [`cc-workspace`](https://github.com/zeuikli/cc-workspace) — split out via `git subtree` into this standalone repo for plugin distribution. The `dist/claude-pilot-suite/` directory in cc-workspace is the source of truth; this repo is the published mirror.
 
 ---
 

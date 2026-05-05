@@ -33,7 +33,7 @@ Best for: ongoing updates, contributing back, having one canonical pilot suite s
 ```bash
 # 1. Clone the suite somewhere persistent
 cd ~/code-shared  # or wherever you keep shared tooling
-git clone https://github.com/<your-fork>/claude-pilot-suite.git
+git clone https://github.com/zeuikli/claude-pilot-suite.git
 
 # 2. In each project that should use it:
 cd ~/your-project
@@ -70,7 +70,7 @@ Best for: starter usage, customizing without diverging from upstream concerns, p
 
 ```bash
 cd ~/your-project
-git clone https://github.com/<your-fork>/claude-pilot-suite.git /tmp/pilot-suite
+git clone https://github.com/zeuikli/claude-pilot-suite.git /tmp/pilot-suite
 
 # Copy what you need
 cp /tmp/pilot-suite/rules/*.md            .claude/rules/
@@ -94,7 +94,7 @@ cd ~/your-project
 
 # Add as a subtree under .claude/
 git subtree add --prefix=.claude/pilot-suite \
-  https://github.com/<your-fork>/claude-pilot-suite.git main --squash
+  https://github.com/zeuikli/claude-pilot-suite.git main --squash
 
 # Then symlink within your .claude/ to standard locations
 ln -s pilot-suite/rules/core.md              .claude/rules/core.md
@@ -112,7 +112,7 @@ ln -s pilot-suite/skills/sonnet-pilot  .claude/skills/sonnet-pilot
 **Pull updates**:
 ```bash
 git subtree pull --prefix=.claude/pilot-suite \
-  https://github.com/<your-fork>/claude-pilot-suite.git main --squash
+  https://github.com/zeuikli/claude-pilot-suite.git main --squash
 ```
 
 ---
