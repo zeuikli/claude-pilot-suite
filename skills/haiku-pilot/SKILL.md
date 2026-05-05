@@ -5,8 +5,7 @@ description: |
   delegation, and quantitative escalation gates, get Haiku 4.5 to produce
   near-Opus quality on most tasks. Escalate to Sonnet/Opus only when gates
   trigger.
-  Triggers: "Haiku mode", "haiku-pilot", "use Haiku", "save tokens with quality",
-  "full Haiku", "max Haiku", "escalation judgment", "cost-saving execution".
+  Triggers: "haiku", "haiku-pilot", "haiku mode".
 
   Do NOT use for: cost-only token optimization, file-count cognitive heuristic,
   agent dispatch table, CLAUDE.md / rules audit, harness health check.
