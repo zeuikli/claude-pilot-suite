@@ -120,28 +120,6 @@ See `examples/CLAUDE.md.template` for a complete example.
 
 ---
 
-## Customization required
-
-This suite is a **starter pack**. Two files require workspace-specific customization:
-
-### 1. `rules/core.md` § Production Safety Red Line
-
-The default text uses abstract markers ("whatever your workspace's production markers are"). Replace with concrete markers for your stack:
-
-- Branch: `main` / `production` / `master`
-- Namespace: `prod` / `production`
-- Project ID prefix: `*-prod` / `prod-*`
-- IaC workspace: `production` / `prod`
-- Environment variable: `ENV=production`
-
-### 2. `rules/subagent-strategy.md` § Sub-Agent Dispatch Table
-
-The default table uses generic agent names (`researcher`, `implementer`, `test-writer`, etc.). Replace with the agents in your `.claude/agents/` directory.
-
-If you don't have specialized agents, the `general-purpose` agent (always available) accepts a `model` override and works as a fallback.
-
----
-
 ## What this is NOT
 
 - **Not a model selector**: this suite assumes you already have access to Haiku 4.5, Sonnet 4.6, and Opus 4.7 via Claude Code. It doesn't change which models are available.
