@@ -61,17 +61,15 @@ These are the always-on baseline rules. They establish:
 @.claude/rules/sonnet-pilot.md
 ```
 
-> **On-demand loading** (trigger phrases listed in each rule's `Do NOT use for` block):
-> - `Plan Mode` / `test strategy` / `large-scale refactor` → load `<your-quality-rule>` if you have one
-> - `security incident` / `credentials` / `secrets` → load your security rules
->
-> Long-running tasks: track in `claude-progress.json`; session-start/stop hooks read/write.
+> **On-demand SKILLs** load only when their trigger phrase appears in a message:
+> - `haiku-pilot` / `haiku mode` / `haiku` → activates Haiku Pilot (cost-first)
+> - `sonnet-pilot` / `sonnet mode` / `sonnet` → activates Sonnet Pilot (quality-first)
 
 ---
 
 ## Pilot Modes (this suite's main offering)
 
-**Default**: Haiku Pilot (cost-first). Trigger explicit switch: `/sonnet-pilot` for quality-first.
+**Default**: Haiku Pilot (cost-first). Trigger explicit switch: `sonnet-pilot` for quality-first.
 
 **When to use which**:
 - **Haiku Pilot**: routine code edits, surgical bug fixes, doc updates, single-file research
@@ -95,7 +93,7 @@ These are the always-on baseline rules. They establish:
 - `<your-runbook>` — incident response
 - `<your-decision-log>` — past architecture decisions
 
-> Index of all SKILLs: see `.claude/skills/` (or your custom RESOLVER.md if you have one).
+> Index of all SKILLs: see `.claude/skills/`.
 
 ---
 
