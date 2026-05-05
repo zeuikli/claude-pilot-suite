@@ -91,39 +91,39 @@ Violation: retry that paragraph; do NOT declare done.
 
 ### Coding tasks
 
-| Task | Sub-agent (suggested) | Model |
-|------|----------------------|-------|
-| Single-file ≤ 30 LoC surgical edit | `haiku-implementer` (or your equivalent) | Haiku 4.5 |
-| Cross-module / > 30 LoC / requires design | `implementer` | Sonnet 4.6 |
-| Bug with failing test | `bugfix` skill (if installed) | Haiku 4.5 |
-| Bug without test | `debug` skill (if installed) | Haiku → Sonnet if stuck |
-| Test writing | `test-writer` | Sonnet 4.6 |
+| Task | Sub-agent | Model |
+|------|-----------|-------|
+| Single-file ≤ 30 LoC surgical edit | `general-purpose` | Haiku 4.5 |
+| Cross-module / > 30 LoC / requires design | `general-purpose` | Sonnet 4.6 |
+| Bug with failing test | `general-purpose` | Haiku 4.5 |
+| Bug without test | `general-purpose` | Haiku → Sonnet if stuck |
+| Test writing | `general-purpose` | Sonnet 4.6 |
 
 ### Research tasks
 
 | Task | Sub-agent | Model |
-|------|----------|-------|
-| ≥ 10-file fact-finding | `researcher` | Haiku 4.5 |
-| Codebase structure inventory | `architecture-explorer` | Haiku 4.5 |
+|------|-----------|-------|
+| ≥ 10-file fact-finding / locate symbols | `Explore` | Haiku 4.5 |
+| Codebase structure inventory | `Explore` | Haiku 4.5 |
 
 ### Review tasks
 
 | Task | Sub-agent | Model |
-|------|----------|-------|
+|------|-----------|-------|
 | Pre-commit multi-dimension review | `/deep-review` | mixed (parallel) |
-| Single-file / single-function review | `quick-code-reviewer` | Sonnet 4.6 |
-| Cross-module architecture / tech selection | `reviewer` | Opus 4.7 |
-| Auth / payment / user-data touchpoints | `security-reviewer` | Sonnet 4.6 |
-| OWASP / proactive threat modeling | `security-auditor` | Sonnet 4.6 |
+| Single-file / single-function review | `general-purpose` | Sonnet 4.6 |
+| Architecture decision / tech selection | `Plan` | Opus 4.7 |
+| Auth / payment / user-data touchpoints | `general-purpose` | Sonnet 4.6 |
+| OWASP / proactive threat modeling | `general-purpose` | Sonnet 4.6 |
 
 ### Docs tasks
 
 | Task | Sub-agent | Model |
-|------|----------|-------|
-| README / CHANGELOG / API docs | `doc-writer` | Haiku 4.5 |
-| Major doc rewrite | `doc-writer` | Sonnet 4.6 |
+|------|-----------|-------|
+| README / CHANGELOG / API docs | `general-purpose` | Haiku 4.5 |
+| Major doc rewrite | `general-purpose` | Sonnet 4.6 |
 
-> *Customize for your workspace*: replace agent names with the agents that exist in your `.claude/agents/` directory. If you don't have specialized agents yet, the `general-purpose` agent + a model override works as a fallback.
+> Add custom agents in `.claude/agents/` to replace `general-purpose` rows with tighter-scoped agents for lower token cost.
 
 ---
 
