@@ -140,9 +140,8 @@ See `examples/CLAUDE.md.template` for a full example with explanations.
 
 In a fresh Claude Code session, type:
 
-```
-/haiku-pilot
-```
+- `haiku-pilot` — activates Haiku Pilot (cost-first mode)
+- `sonnet-pilot` — activates Sonnet Pilot (quality-first mode)
 
 You should see Claude acknowledge mode switch + load the SKILL playbook. Try a task; pre-flight should fire.
 
@@ -161,14 +160,14 @@ If you skip customization, the suite still works but with degraded specificity (
 
 ## Uninstall
 
-For Method 1 (symlink):
+For Method 2 (symlink):
 ```bash
 rm .claude/rules/{core,subagent-strategy,context-management,output-discipline,haiku-pilot,sonnet-pilot}.md
 rm -r .claude/skills/{haiku,sonnet}-pilot
 # Remove the @-imports from CLAUDE.md
 ```
 
-For Methods 2/3, delete the copied files / subtree.
+For Methods 3/4, delete the copied files / subtree.
 
 ---
 
@@ -184,7 +183,7 @@ Check:
 ### "Triggers" don't activate the SKILL
 
 The pilot SKILLs are on-demand (loaded by trigger phrase). Required:
-- Trigger phrase is in the message (e.g. `/haiku-pilot` or "Haiku 模式")
+- Trigger phrase is in the message (e.g. `haiku`, `haiku-pilot`, `haiku mode`, `sonnet`, `sonnet-pilot`, `sonnet mode`)
 - The SKILL directory exists at `.claude/skills/<skill-name>/SKILL.md`
 - The SKILL frontmatter parses (no syntax errors)
 

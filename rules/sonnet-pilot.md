@@ -1,3 +1,8 @@
+---
+description: Sonnet Pilot mode declaration + escalation gates (auto-loaded)
+tier: auto
+---
+
 # Sonnet Pilot — Mode Declaration
 
 ## Mode Overview

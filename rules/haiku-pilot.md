@@ -1,3 +1,8 @@
+---
+description: Haiku Pilot mode declaration + escalation gates (auto-loaded)
+tier: auto
+---
+
 # Haiku Pilot — Default Haiku, Quantified Escalation
 
 > Source: AgentOpt (arxiv 2604.06296, 2026-04) + Augment Code AGENTS.md eval (2026-04-22).

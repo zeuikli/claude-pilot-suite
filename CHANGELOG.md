@@ -8,14 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- Prepared migration to standalone repo `zeuikli/claude-pilot-suite`: subtree-split branch produced locally; docs updated to canonical URL. Actual repo creation + first push happens out-of-band; cc-workspace `dist/claude-pilot-suite/` remains the source of truth, the standalone repo will be the published mirror.
-- Updated all installation URLs from `<your-fork>` placeholder to canonical `zeuikli/claude-pilot-suite`.
+- Migrated to standalone repo `zeuikli/claude-pilot-suite` as the canonical source of truth.
+- Updated all installation URLs to canonical `zeuikli/claude-pilot-suite`.
 - Added `repository` field to `.claude-plugin/plugin.json` for plugin tooling discovery.
-- Added `RELEASING.md` documenting the subtree-split + push flow for future re-publishes.
+- Added `RELEASING.md` documenting the release flow.
 
 ### Fixed
 
-- Plugin manifest `homepage` now points to standalone repo root rather than cc-workspace subdirectory.
+- Plugin manifest `homepage` now points to standalone repo root.
 
 ## [0.1.0] - 2026-05-04
 
