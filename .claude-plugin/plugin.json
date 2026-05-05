@@ -1,7 +1,7 @@
 {
   "name": "claude-pilot-suite",
-  "version": "0.1.0",
-  "description": "Haiku-first / Sonnet-first execution playbook for Claude Code. Two pilot SKILLs + 6 baseline rules. Achieves Opus-class quality at 55–85% cost via context engineering and quantitative escalation gates.",
+  "version": "0.1.1",
+  "description": "Portable execution playbook for Claude Code — two pilot modes (Haiku-first, Sonnet-first) that achieve near-Opus quality at 55–85% lower cost via sub-agent delegation and quantitative escalation gates.",
   "author": "Zeuik Li",
   "license": "MIT",
   "homepage": "https://github.com/zeuikli/claude-pilot-suite",
@@ -9,5 +9,5 @@
     "type": "git",
     "url": "https://github.com/zeuikli/claude-pilot-suite.git"
   },
-  "keywords": ["claude-code", "skill", "pilot", "haiku", "sonnet", "cost-optimization", "agent-harness"]
+  "keywords": ["claude-code", "skill", "pilot", "haiku", "sonnet", "haiku-pilot", "sonnet-pilot", "claude"]
 }
