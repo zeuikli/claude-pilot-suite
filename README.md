@@ -1,6 +1,6 @@
 # Claude Pilot Suite
 
-> **Version**: 0.1.0 (initial portable release, 2026-05-04)
+> **Version**: 0.1.1 (2026-05-05)
 > **License**: MIT
 > **Validated on**: Claude Sonnet 4.6 + Haiku 4.5 + Opus 4.7 (4-iteration benchmark, n=10 task corpus)
 
