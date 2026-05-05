@@ -138,21 +138,10 @@ See `examples/CLAUDE.md.template` for a full example with explanations.
 
 ## Verify installation
 
-In a fresh Claude Code session, type any of the trigger phrases:
+In a fresh Claude Code session, type:
 
-```
-haiku
-haiku-pilot
-haiku mode
-```
-
-or for Sonnet Pilot:
-
-```
-sonnet
-sonnet-pilot
-sonnet mode
-```
+- `haiku-pilot` — activates Haiku Pilot (cost-first mode)
+- `sonnet-pilot` — activates Sonnet Pilot (quality-first mode)
 
 You should see Claude acknowledge mode switch + load the SKILL playbook. Try a task; pre-flight should fire.
 
