@@ -181,18 +181,15 @@ To update: `cd ~/code-shared/claude-pilot-suite && git pull`.
 
 ## Compatibility with other Claude Code skills
 
-- **`citation-discipline`** (separate skill): enforces structured anchors when citing external sources. Both pilot SKILLs reference it (`§ Pre-flight #4`) but degrade gracefully if not installed.
-- **`harness-eval`**: orthogonal — scores overall harness health (rule layer); this suite executes within that harness.
-- **`output-discipline.md`** (included): plain-text formatting baseline referenced by both pilot SKILLs.
+- **`output-discipline.md`** (included): plain-text formatting baseline referenced by both pilot SKILLs — no separate installation needed.
+- **Citation anchors**: built directly into `haiku-pilot.md` and `sonnet-pilot.md` (§ Pre-flight #4 in each). No external skill required.
 
 ---
 
 ## Acknowledgments
 
-- AgentOpt research (arxiv 2604.06296)
-- Augment Code AGENTS.md evaluation (2026-04)
-- Anthropic Claude Code conventions (`AGENTS.md` cross-tool root manifest)
-- 4-iteration internal benchmark (5/3 baseline → v1 mode-declaration → v2 asymmetric → v3 symmetric)
+- AgentOpt (arxiv 2604.06296): empirical basis for weak-planner + strong-delegation > strong-planner-alone
+- Augment Code AGENTS.md evaluation (2026-04): empirical basis for docs quality ≈ model tier upgrade
 
 Source repository: <https://github.com/zeuikli/claude-pilot-suite>. See `RELEASING.md` for the release flow.
 
