@@ -13,5 +13,9 @@
     "type": "git",
     "url": "https://github.com/zeuikli/claude-pilot-suite.git"
   },
-  "keywords": ["claude-code", "skill", "pilot", "haiku", "sonnet", "haiku-pilot", "sonnet-pilot", "cost-optimization", "agent-delegation"]
+  "keywords": ["claude-code", "skill", "pilot", "haiku", "sonnet", "haiku-pilot", "sonnet-pilot", "cost-optimization", "agent-delegation"],
+  "triggers": {
+    "haiku-pilot": ["haiku", "Haiku", "Haiku mode", "haiku-pilot"],
+    "sonnet-pilot": ["sonnet", "Sonnet", "Sonnet mode", "sonnet-pilot"]
+  }
 }
