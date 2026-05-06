@@ -4,7 +4,7 @@ description: |
   Sonnet-first quality playbook: through context engineering, sub-agent delegation,
   and forced self-review loops, get Sonnet 4.6 to produce code/doc quality on par
   with Opus 4.7. Escalate to Opus only when quantitative gates trigger.
-  Triggers: "Sonnet mode", "sonnet-pilot", "quality first", "approach Opus quality",
+  Triggers: "sonnet", "Sonnet mode", "sonnet-pilot", "quality first", "approach Opus quality",
   "Sonnet 模式", "全力 Sonnet", "品質優先", "接近 Opus".
 
   Do NOT use for: pure cost optimization, file-count cognitive heuristic,
