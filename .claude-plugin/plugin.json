@@ -1,6 +1,6 @@
 {
   "name": "claude-pilot-suite",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Portable execution playbook for Claude Code — two pilot modes (Haiku-first, Sonnet-first) that achieve near-Opus quality at 55–85% lower cost via sub-agent delegation and quantitative escalation gates.",
   "author": {
     "name": "Zeuik Li",
