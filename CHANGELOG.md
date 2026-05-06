@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - README.md and INSTALL.md: Corrected markdown content errors (broken links, wrong section headers, stale text)
 - **G-01** `rules/sonnet-pilot.md`: Anchor threshold changed from fixed count to density ≥ 3 per 100 characters
 - **G-06** `skills/haiku-pilot/SKILL.md`: Added citation semantic drift warning to prevent hallucinated citations on paraphrase
+- **`skills/haiku-pilot/SKILL.md`** and **`skills/sonnet-pilot/SKILL.md`**: Finalized trigger phrase list — `"haiku"`, `"Haiku"`, `"Haiku mode"`, `"haiku-pilot"` / `"sonnet"`, `"Sonnet"`, `"Sonnet mode"`, `"sonnet-pilot"`. Removed Chinese phrases and unrelated English phrases; added missing bare `"haiku"` / `"Haiku"` / `"sonnet"` / `"Sonnet"` that INSTALL.md documents as valid triggers
 
 ### Changed
 
