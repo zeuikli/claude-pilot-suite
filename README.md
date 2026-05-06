@@ -1,6 +1,6 @@
 # Claude Pilot Suite
 
-> **Version**: 0.1.1 (2026-05-06 — G-01~G-06 gap fixes from pilot-benchmark)
+> **Version**: 0.2 (2026-05-06 — G-01~G-08 gap fixes from pilot-benchmark)
 > **License**: MIT
 > **Validated on**: Claude Sonnet 4.6 + Haiku 4.5 + Opus 4.7 (4-iteration benchmark, n=10 task corpus)
 
