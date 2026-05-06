@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.0] - 2026-05-06
+
+### Fixed
+
+- `rules/haiku-pilot.md` and `rules/sonnet-pilot.md`: Added missing YAML frontmatter so rules load correctly via `@-import` (#13)
+- README.md and INSTALL.md: Corrected markdown content errors (broken links, wrong section headers, stale text)
+
+### Changed
+
+- **SKILL trigger phrases** (`haiku-pilot`, `sonnet-pilot`): Simplified to natural-language forms that Claude Code recognises out of the box (#2)
+- **Sub-agent names** (`rules/subagent-strategy.md`, `skills/haiku-pilot/SKILL.md`): Replaced fictional agent names with the real Claude Code built-in agent types (`Explore`, `code-reviewer`, `general-purpose`, etc.) (#5)
+- **SKILL.md content** (`haiku-pilot`, `sonnet-pilot`): Removed sections unrelated to this repo; tightened scope to pilot-mode behaviour only (#7)
+- **`examples/CLAUDE.md.template`**: Updated trigger phrases to match actual SKILL names (#8)
+- **`plugin.json`**: Updated description, version, keywords, and fixed `author` object format (#10, #12)
+- **README.md**: Full rewrite based on actual repo files and real use cases; added `/plugin install` one-liner and usage examples (#11, #12)
+- **INSTALL.md**: Simplified "Verify installation" section (#4)
+- **RELEASING.md**: Streamlined release checklist; removed obsolete multi-repo guidance (#5)
+
 ## [0.1.1] - 2026-05-05
 
 ### Changed
