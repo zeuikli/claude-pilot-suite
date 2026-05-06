@@ -45,7 +45,7 @@ claude-pilot-suite/
 
 ### Haiku Pilot (cost-first, default)
 
-Trigger: `/haiku-pilot` or "Haiku mode" / "全力 Haiku" / "save tokens with quality"
+Trigger: "haiku" / "Haiku" / "Haiku mode" / "haiku-pilot"
 
 **Philosophy**: weak planner + strong delegation > strong planner alone. Default to Haiku, dispatch sub-agents aggressively, escalate only on quantitative gate triggers.
 
@@ -59,7 +59,7 @@ Trigger: `/haiku-pilot` or "Haiku mode" / "全力 Haiku" / "save tokens with qua
 
 ### Sonnet Pilot (quality-first)
 
-Trigger: `/sonnet-pilot` or "Sonnet mode" / "品質優先" / "approach Opus quality"
+Trigger: "sonnet" / "Sonnet" / "Sonnet mode" / "sonnet-pilot"
 
 **Philosophy**: deep context engineering + Opus-on-demand via `advisor()` ≈ full Opus quality.
 
