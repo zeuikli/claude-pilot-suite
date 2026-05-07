@@ -183,7 +183,7 @@ Check:
 ### "Triggers" don't activate the SKILL
 
 The pilot SKILLs are on-demand (loaded by trigger phrase). Required:
-- Trigger phrase is in the message (e.g. `haiku`, `haiku-pilot`, `haiku mode`, `sonnet`, `sonnet-pilot`, `sonnet mode`)
+- Trigger phrase is in the message (e.g. `haiku`, `Haiku`, `Haiku mode`, `haiku-pilot`, `sonnet`, `Sonnet`, `Sonnet mode`, `sonnet-pilot`)
 - The SKILL directory exists at `.claude/skills/<skill-name>/SKILL.md`
 - The SKILL frontmatter parses (no syntax errors)
 
