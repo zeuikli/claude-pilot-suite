@@ -151,8 +151,6 @@ If you don't have specialized agents, the `general-purpose` agent (always availa
 
 ## Compatibility with other Claude Code skills
 
-- **`citation-discipline`** (separate skill, also published as portable): enforces structured anchors when citing external sources. Both pilot SKILLs reference it (`§ Pre-flight #4`) but degrade gracefully if not installed.
-- **`harness-eval`**: orthogonal — it scores your overall harness health (rule layer); this suite executes within that harness.
 - **`output-discipline.md`** (included): plain-text formatting baseline; both pilot SKILLs reference it.
 
 ---
