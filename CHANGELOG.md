@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.1] - 2026-05-07
+
+### Fixed
+
+- **`rules/sonnet-pilot.md`**: Translated all rules to English (#15)
+- **`skills/haiku-pilot/SKILL.md`** + **`skills/sonnet-pilot/SKILL.md`**: Removed false `/sonnet-pilot` and `/haiku-pilot` slash-trigger claims; trigger phrases are natural-language only, not slash commands (#16)
+- **`examples/CLAUDE.md.template`**: Synced with v0.3.0 changelog and README; accurate trigger phrases and install instructions (#17)
+- **`skills/haiku-pilot/SKILL.md`** § Compatibility: Removed non-existent skills (`/ultrathink`, `/deep-research`) from compatibility section (#18)
+
+### Changed
+
+- **`RELEASING.md`** + **`INSTALL.md`**: Codified v0.3.0 release lessons; synced trigger phrase documentation
+
 ## [0.3.0] - 2026-05-07
 
 ### Added
