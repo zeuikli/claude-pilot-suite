@@ -92,6 +92,24 @@ For tasks with ≥ 3 independent steps, **pause and verify** after each:
 
 > Empirical basis: AgentOpt experiments show step roles in multi-step pipelines matter more than overall model capability; Sonnet's failure mode is "reasoning without verification checkpoints".
 
+### 6. Mid-Write Outline Verification (architecture / counter-factual / synthesis tasks)
+
+**Trigger**: tasks tagged Architecture / Counter-factual / Synthesis (per § Task-Type Fast-Path table).
+
+**Procedure** (run once at ~200 words drafted, before continuing):
+
+| Check | Action on fail |
+|-------|----------------|
+| Still inside the question's scope? | Drop tangential paragraphs |
+| Projected total ≤ 800w? (current_wc × est_remaining_sections) | Cut outline; merge sections |
+| All N mandatory citations / subquestions covered? (list them; checkmark) | Add missing items first; do not write more body until covered |
+
+**Why this exists**: Pre-flight #4 (Self-Review Loop, `git diff --stat`) fires *after* the answer is written. By that point, runaway answers are already 700–800 words. Mid-write checkpoint catches scope drift / missed mandatory citations *while still cheap to fix*.
+
+**Empirical basis**: 2026-05-06 v0.2.1 benchmark Q18 — sonnet-pilot wrote 750 words on a CLAUDE.md refactor plan but **omitted 2 of 3 required verbatim numbers** (−28.64%, #33→#5). A 200-word checkpoint listing required citations would have surfaced the omission with 550 words still to write. Net loss: −6 vs Opus baseline.
+
+**Skip when**: Easy recall, Wiki/ref extraction, or Code implementation tasks (where the gate adds overhead with no expected catch).
+
 ---
 
 ## Per-Task Router

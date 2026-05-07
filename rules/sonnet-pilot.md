@@ -23,6 +23,11 @@
 3. 立即載入完整 playbook：`.claude/skills/sonnet-pilot/SKILL.md`
 4. 執行 Per-Session Pre-flight（Decision-Log、Reasoning Chain Before Code、Self-Review Loop 強制啟動）
 5. **Citation Anchor**（涉及 wiki/ref 引用任務必檢）：每答題段落 ≥ 3 結構化錨點（`Step N` / `Anti-pattern #N` / `CLD.X.Y` / `Concrete Numbers` / `Decision Tree` / `Gotcha [Source]`）；模糊措辭如「wiki 案例」「wiki 提到」**不計**為錨點。與 haiku-pilot.md §Pre-flight #4 同基準。
+6. **Mid-write Checkpoint**（架構決策 / 反事實 / 綜合任務必檢）：寫到約 200 字時暫停，回答三題：
+    (i) 還在題幹 scope 內？（不是岔題到周邊主題）
+    (ii) 預估完稿字數 ≤ 800？（用 current word count × estimated remaining sections 推算；> 800 → 砍 outline）
+    (iii) 題幹列出的 N 個必引數字 / 必答子題目前涵蓋幾個？（列清單對照）
+   任一不通過 → 回頭重整 outline 後再續寫，不要硬寫到結尾。**實證依據**：v0.2.1 benchmark Q18 sonnet-pilot 寫 750 字仍漏 3 個必引數字中的 2 個（−28.64%、#33→#5），輸 Opus −6 分。Checkpoint 在 200w 即可抓到漏引並縮減 outline。
 
 ## Self-check 模板（涉及 wiki 引用任務必填，**單一表格不擴張**，與 haiku-pilot 對稱）
 
