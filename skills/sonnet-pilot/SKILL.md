@@ -267,7 +267,7 @@ Quality target: Sonnet + good context ≈ Opus baseline; when Opus does fire, it
 
 ## Relationship to Other Infrastructure
 
-- `haiku-pilot` = cost-first mode, default Haiku; this SKILL = quality-first mode, default Sonnet. Switch: `/haiku-pilot` or `/sonnet-pilot`.
+- `haiku-pilot` = cost-first mode, default Haiku; this SKILL = quality-first mode, default Sonnet. Switch via trigger phrases (`Haiku mode` / `haiku-pilot` or `Sonnet mode` / `sonnet-pilot`); there is no slash command.
 - `subagent-strategy.md` rule = dispatch table (this SKILL adds "quality enhancements" overlay only; doesn't rewrite dispatch)
 - `output-discipline.md` rule = output formatting baseline
 - `advisor()` = bridge from Sonnet session to Opus opinion (haiku-pilot uses rarely; this SKILL uses frequently)

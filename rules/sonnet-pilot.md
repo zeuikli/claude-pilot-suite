@@ -11,15 +11,17 @@ tier: auto
 
 | Mode | Activation | Default Model | Quality Target |
 |------|------------|---------------|----------------|
-| **Haiku mode** (haiku-pilot) | default / `/haiku-pilot` | Haiku 4.5 | Approach Opus, maximum cost savings |
-| **Sonnet mode** (this SKILL) | `/sonnet-pilot` or trigger words | Sonnet 4.6 | Match Opus, quality-first |
+| **Haiku mode** (haiku-pilot) | default (auto-loaded) | Haiku 4.5 | Approach Opus, maximum cost savings |
+| **Sonnet mode** (this SKILL) | trigger phrases (see below) | Sonnet 4.6 | Match Opus, quality-first |
 
 **Conflict resolution**: whichever mode was most recently and explicitly activated wins. With no explicit activation → haiku-pilot is the default.
 
-## Trigger Words (auto-switch to Sonnet mode for this session)
+> **Note**: activation is via natural-language trigger phrases that the SKILL auto-loads on; there is **no** `/sonnet-pilot` or `/haiku-pilot` slash command.
 
-- `/sonnet-pilot`, `Sonnet mode`, `full Sonnet`
-- `Sonnet matches Opus`, `Sonnet Pilot`, `sonnet-pilot`, `quality-first`, `approach Opus`
+## Trigger Phrases (auto-switch to Sonnet mode for this session)
+
+- `sonnet`, `Sonnet`, `Sonnet mode`, `sonnet-pilot`
+- Additional natural-language triggers: `full Sonnet`, `Sonnet matches Opus`, `Sonnet Pilot`, `quality-first`, `approach Opus`
 
 ## Behavior After Activation
 
@@ -73,6 +75,6 @@ fast-path: <one-sentence reason>
 
 ## Known Gotchas
 
-- **Don't enter both mode triggers at once**: typing `/haiku-pilot /sonnet-pilot` together → the last trigger wins.
+- **Don't activate both modes in the same turn**: if both `Haiku mode` and `Sonnet mode` triggers appear in one message, the last one wins.
 - **Sonnet mode is not "always use Opus"**: Opus only appears when a quantified gate fires; the goal of Sonnet mode is to reach Opus-level quality with Sonnet, not to replace Opus.
 - **Does not carry over after the session ends**: a new session reverts to the haiku-pilot default; every quality-first session must be re-activated.

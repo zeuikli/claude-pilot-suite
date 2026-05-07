@@ -15,9 +15,10 @@ tier: auto
 
 ## Mode Switching
 
-- **Haiku mode** (this rule): default, cost-first. Trigger words: `Haiku mode`, `cost-efficient run`, `/haiku-pilot`
-- **Sonnet mode**: quality-first, overrides this default. Trigger words: `Sonnet mode`, `quality-first`, `/sonnet-pilot`
+- **Haiku mode** (this rule): default, cost-first. Trigger phrases: `haiku`, `Haiku`, `Haiku mode`, `haiku-pilot`, `cost-efficient run`
+- **Sonnet mode**: quality-first, overrides this default. Trigger phrases: `sonnet`, `Sonnet`, `Sonnet mode`, `sonnet-pilot`, `quality-first`
 - Both modes coexist; whichever was most recently and explicitly activated wins. Sonnet playbook: `.claude/skills/sonnet-pilot/SKILL.md`
+- Activation is via natural-language phrases the SKILL auto-loads on; there is **no** `/sonnet-pilot` or `/haiku-pilot` slash command.
 
 ## Escalation Gates (quantified — not gut feeling)
 
