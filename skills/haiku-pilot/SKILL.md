@@ -71,7 +71,27 @@ Violation: retry that paragraph; do NOT declare done.
 
 > Empirical basis: anchor density discrepancy is the primary driver of citation accuracy variance between Haiku and Sonnet/Opus on benchmark tasks. See `citation-discipline` skill if installed.
 
-### 5. Content-First Structure (not Template-First)
+### 5. Source-Verify Loop (required for citation tasks)
+
+After drafting an answer that cites numbers, model names, or verbatim quotes, run this 3-step loop **before declaring done**:
+
+1. **Identify**: list every numeric / proper-noun citation in your answer (e.g. "31.71%", "Claude Opus 4.6", "≥ 100 lines").
+2. **Grep**: for each citation, run `grep -i "<number-or-name>" <source-path>`. If absent → the citation is fabricated.
+3. **Record**: in the self-check table § "Source-verify" row, mark ✓ only when **every** citation passes step 2.
+
+| Failure mode caught | Example from v0.2.1 benchmark |
+|---------------------|-------------------------------|
+| Cross-paper number mis-attribution | Q06: "5.6× cognitive load" attributed to P06/P07 (actually a benchmark-internal number) |
+| Fabricated benchmark scores | Q12: "Opus+HumanLayer=55%, Haiku=40%" — neither in source |
+| Non-existent model version | Q13: "Claude 3.5 Opus" — no such Anthropic-published version |
+| Invented latency / token claims | Q17: "p99 < 100ms / 500K tokens" — not in P08 |
+| Vague paper-grounded targets | Q18: "失敗率 ↓ 60–80%" — paper has no such range |
+
+If any cited number fails grep, **rewrite that paragraph** before completion. **Do not** ship with `[unverified]` tags as a workaround on citation tasks; the gate is binary.
+
+> Empirical basis: 2026-05-06 v0.2.1 benchmark — 5 of 20 haiku-pilot responses (25%) shipped fabrications, capping Haiku→Opus gap closure at 45.3%. Adding this gate is the highest-ROI lever per gap analysis.
+
+### 6. Content-First Structure (not Template-First)
 
 **Forbidden**: filling every question with a fixed sub-heading template; restating in prose what the table already says.
 
@@ -225,6 +245,7 @@ Savings: 1 - 6/45 = 86.7%
 - **Emoji inflation**: Haiku tends to use ✅❌🔴 to emphasize every point, wasting 5–10% tokens and lowering info density. Mitigation: ≤ 3 emotion symbols per section; neutral statements get none.
 - **Anti-pattern count free-listing**: Haiku adds new items beyond the source's actual list to seem complete. Mitigation: if source lists N → answer with N. Derived inferences go in a separate `[derived]` section.
 - **Citation semantic drift**: Haiku uses vague phrasing ("the wiki mentions X", "as the wiki example shows") instead of anchored citations (`Anti-pattern #N: ...`, `Step N: ...`, `Gotcha [Source]: ...`). 2026-05-04 benchmark measured anchor density at 0.75/100w vs Sonnet 3.43/100w (4.6× gap). Mitigation: vague phrases trigger a retry — every claim about a source document must cite a specific anchor, not just describe it.
+- **Number fabrication on hard tasks**: when a question demands specific numbers and the cited source is dense, Haiku tends to invent or compound values rather than admit absence. 2026-05-06 v0.2.1 benchmark caught 5 fabrication cases in 20 questions (Q06, Q12, Q13, Q17, Q18). Mitigation: this SKILL § Pre-flight #5 (Source-Verify Loop) — every numeric citation must pass `grep -i` against source path before completion; this is a hard gate, not a soft threshold.
 
 ---
 
@@ -236,6 +257,7 @@ Savings: 1 - 6/45 = 86.7%
 | Escalation gate quantitative thresholds are accurate | After 1 week, audit escalation events: how many fit a gate, how many were gut feel? |
 | Actually saving 70–85%? | Use your cost tracking tool; compare to baseline |
 | Citation Anchor (Pre-flight #4) compliance | Pre-completion grep on Haiku-completed answer files: `grep -cE "Step [0-9]+\|anti-pattern #[0-9]+\|:[0-9]+-[0-9]+" <answer_file>` ≥ 1 per 200 words. If not, retry to fix. |
+| Source-Verify (Pre-flight #5) compliance | For each numeric citation in the answer, run `grep -i "<number>" <source_path>`. Zero fabrications allowed. Audit cadence: post-task on every citation-heavy answer; weekly aggregate on completed batches. |
 
 > Don't trust LLM self-evaluation. External tool verification is the basis.
 
