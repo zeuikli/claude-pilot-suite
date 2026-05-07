@@ -1,73 +1,78 @@
-# Sonnet Pilot — 模式宣告（Mode Declaration）
+---
+description: Sonnet Pilot mode declaration + quality gates (auto-loaded when triggered)
+tier: auto
+---
 
-## 模式說明
+# Sonnet Pilot — Mode Declaration
 
-`sonnet-pilot` 和 `haiku-pilot` 是並存的執行模式，不互相衝突：
+## Mode Overview
 
-| 模式 | 啟動方式 | 預設模型 | 品質目標 |
-|------|---------|---------|---------|
-| **Haiku 模式**（haiku-pilot） | 預設 / `/haiku-pilot` | Haiku 4.5 | 接近 Opus，極致省費 |
-| **Sonnet 模式**（本 SKILL） | `/sonnet-pilot` 或觸發詞 | Sonnet 4.6 | 比肩 Opus，品質優先 |
+`sonnet-pilot` and `haiku-pilot` are coexisting execution modes; they do not conflict:
 
-**衝突解法**：最後一次明確啟動的模式生效。無明確啟動 → haiku-pilot 預設。
+| Mode | Activation | Default Model | Quality Target |
+|------|------------|---------------|----------------|
+| **Haiku mode** (haiku-pilot) | default / `/haiku-pilot` | Haiku 4.5 | Approach Opus, maximum cost savings |
+| **Sonnet mode** (this SKILL) | `/sonnet-pilot` or trigger words | Sonnet 4.6 | Match Opus, quality-first |
 
-## 觸發詞（本 session 自動切換 Sonnet 模式）
+**Conflict resolution**: whichever mode was most recently and explicitly activated wins. With no explicit activation → haiku-pilot is the default.
 
-- `/sonnet-pilot`、`Sonnet 模式`、`全力 Sonnet`
-- `Sonnet 比肩 Opus`、`Sonnet Pilot`、`sonnet-pilot`、`品質優先`、`接近 Opus`
+## Trigger Words (auto-switch to Sonnet mode for this session)
 
-## 啟動後行為
+- `/sonnet-pilot`, `Sonnet mode`, `full Sonnet`
+- `Sonnet matches Opus`, `Sonnet Pilot`, `sonnet-pilot`, `quality-first`, `approach Opus`
 
-1. 本 session 主力模型切換為 **Sonnet 4.6**
-2. 覆蓋 `haiku-pilot.md` 的 Haiku 預設
-3. 立即載入完整 playbook：`.claude/skills/sonnet-pilot/SKILL.md`
-4. 執行 Per-Session Pre-flight（Decision-Log、Reasoning Chain Before Code、Self-Review Loop 強制啟動）
-5. **Citation Anchor**（涉及 wiki/ref 引用任務必檢）：每答題段落 ≥ 3 結構化錨點（`Step N` / `Anti-pattern #N` / `CLD.X.Y` / `Concrete Numbers` / `Decision Tree` / `Gotcha [Source]`）；模糊措辭如「wiki 案例」「wiki 提到」**不計**為錨點。與 haiku-pilot.md §Pre-flight #4 同基準。
-6. **Mid-write Checkpoint**（架構決策 / 反事實 / 綜合任務必檢）：寫到約 200 字時暫停，回答三題：
-    (i) 還在題幹 scope 內？（不是岔題到周邊主題）
-    (ii) 預估完稿字數 ≤ 800？（用 current word count × estimated remaining sections 推算；> 800 → 砍 outline）
-    (iii) 題幹列出的 N 個必引數字 / 必答子題目前涵蓋幾個？（列清單對照）
-   任一不通過 → 回頭重整 outline 後再續寫，不要硬寫到結尾。**實證依據**：v0.2.1 benchmark Q18 sonnet-pilot 寫 750 字仍漏 3 個必引數字中的 2 個（−28.64%、#33→#5），輸 Opus −6 分。Checkpoint 在 200w 即可抓到漏引並縮減 outline。
+## Behavior After Activation
 
-## Self-check 模板（涉及 wiki 引用任務必填，**單一表格不擴張**，與 haiku-pilot 對稱）
+1. Primary model for this session switches to **Sonnet 4.6**
+2. Overrides the Haiku default in `haiku-pilot.md`
+3. Immediately load the full playbook: `.claude/skills/sonnet-pilot/SKILL.md`
+4. Run Per-Session Pre-flight (Decision-Log, Reasoning Chain Before Code, Self-Review Loop are mandatory)
+5. **Citation Anchor** (required for wiki/ref citation tasks): every answer paragraph needs ≥ 3 structured anchors (`Step N` / `Anti-pattern #N` / `CLD.X.Y` / `Concrete Numbers` / `Decision Tree` / `Gotcha [Source]`); vague phrasing like "the wiki mentions" or "the wiki shows" does **not** count as an anchor. Same baseline as `haiku-pilot.md` §Pre-flight #4.
+6. **Mid-write Checkpoint** (required for architecture decisions / counter-factuals / synthesis tasks): pause around the 200-word mark and answer three questions:
+    (i) Still within the question's scope? (Not drifting into adjacent topics)
+    (ii) Estimated final word count ≤ 800? (Project from `current word count × estimated remaining sections`; > 800 → trim outline)
+    (iii) Of the N required numbers / required sub-questions listed in the prompt, how many are covered so far? (List and tick off)
+   Any failure → reset the outline before continuing; do not push through to the end. **Empirical basis**: v0.2.1 benchmark Q18 — sonnet-pilot wrote 750 words but still missed 2 of 3 required numbers (−28.64%, #33→#5), losing to Opus by −6 points. The checkpoint catches the missing citations at 200 words and lets you shrink the outline in time.
 
-| 檢查項 | Q1 | Q2 | Q3 | Q4 | Q5 | Pass |
-|--------|----|----|----|----|----|------|
-| 字數（`wc -w`，≤ 800/題）| ___ | ___ | ___ | ___ | ___ | ✓/✗ |
-| Anchor density（≥ 3 anchors/100字；每題字數用 `wc -w` 量）| ___ | ___ | ___ | ___ | ___ | ✓/✗ |
-| Sonnet→Opus 閘門（hit/no-hit + 一句理由）| ___ | ___ | ___ | ___ | ___ | — |
+## Self-check Template (required for wiki citation tasks — **single table, no expansion**, symmetric to haiku-pilot)
 
-**軟閾值**：每題 density ≥ 3 anchors/100字；任一題未達 → **觸發 retry**（重跑題補編號引用）。
-**禁止**：擴張為多個 H3 區塊、追加散文說明、重寫題目脈絡。**只填上表**。對稱於 haiku-pilot.md，避免 token 效率退步。
+| Check | Q1 | Q2 | Q3 | Q4 | Q5 | Pass |
+|-------|----|----|----|----|----|------|
+| Word count (`wc -w`, ≤ 800/question) | ___ | ___ | ___ | ___ | ___ | ✓/✗ |
+| Anchor density (≥ 3 anchors/100w; per-question word count via `wc -w`) | ___ | ___ | ___ | ___ | ___ | ✓/✗ |
+| Sonnet→Opus gate (hit/no-hit + one-line reason) | ___ | ___ | ___ | ___ | ___ | — |
 
-## Task-type Fast-Path（self-check overhead 大於價值時跳過）
+**Soft threshold**: per-question density ≥ 3 anchors/100w; any question below threshold → **trigger retry** (re-run the question, add numbered citations).
+**Prohibited**: expanding into multiple H3 sections, appending prose commentary, rewriting question context. **Fill only the table above.** Symmetric to `haiku-pilot.md` to avoid token-efficiency regression.
 
-| 任務型態 | Pre-flight self-check | Reasoning chain |
-|---------|:---------------------:|:---------------:|
-| **Easy fact-extraction**（≤ 100 字答案、單一來源、純回憶 / 定義） | **skip**（改為單行 `fast-path: <reason>`）| inline 一句說明 |
-| Comparison / Application / Critique / Design（中等難度）| **mandatory**（完整單表）| 完整 chain |
-| Architecture / Counter-factual / Synthesis（困難）| **mandatory** + Mid-write Checkpoint（見 §Mid-write Checkpoint）| 完整 chain |
+## Task-type Fast-path (skip self-check when overhead > value)
 
-**判斷條件**（任一觸發即歸類為 easy fast-path）：
-- 題幹要求「列出 / 寫出 / 定義」且 ≤ 5 個事實點
-- 預期答案不含表格、決策樹、跨段比較
-- 全部 source 證據在前 2 次 Read 內可見
+| Task type | Pre-flight self-check | Reasoning chain |
+|-----------|:---------------------:|:---------------:|
+| **Easy fact-extraction** (≤ 100w answer; single source; pure recall / definition) | **skip** (replace with a single line `fast-path: <reason>`) | inline 1-sentence note |
+| Comparison / Application / Critique / Design (medium) | **mandatory** (full single-table) | full chain |
+| Architecture / Counter-factual / Synthesis (hard) | **mandatory** + Mid-write Checkpoint (see §Behavior After Activation #6) | full chain |
 
-觸發 fast-path 時，self-check 退化為單行：
+**Trigger criteria** (any one → easy fast-path):
+- Question asks "list / write out / define" with ≤ 5 facts requested
+- Expected answer has no tables, decision trees, or cross-section comparison
+- All needed source evidence is visible within the first 2 Reads
+
+When fast-path applies, the self-check collapses to a single line:
 ```
-fast-path: <一句理由>
+fast-path: <one-sentence reason>
 ```
 
-**實證依據**：2026-05-06 v0.2.1 benchmark — Q01 sonnet-pilot 輸給 vanilla −4 分（簡單六組件回憶題；self-check overhead 大於收益）。Fast-path 消除此類 net-negative 場景。
+**Empirical basis**: 2026-05-06 v0.2.1 benchmark — Q01 sonnet-pilot lost −4 to vanilla on a simple 6-component recall task (self-check overhead exceeded value). Fast-path eliminates these net-negative cases.
 
-## 與 haiku-pilot.md 的邊界
+## Boundary with haiku-pilot.md
 
-- **升級閘門**：haiku-pilot 的 Haiku→Sonnet 升級條件，在 Sonnet 模式中**不適用**（已在 Sonnet）。
-- **Opus 升級**：Sonnet 模式有獨立的 Sonnet→Opus 閘門（見 SKILL.md §升級閘門）。
-- **Sub-agent dispatch**：兩模式共用 `subagent-strategy.md`，不重寫。
+- **Escalation gates**: the Haiku→Sonnet escalation conditions in haiku-pilot **do not apply** in Sonnet mode (already on Sonnet).
+- **Opus escalation**: Sonnet mode has its own Sonnet→Opus gate (see `SKILL.md` §Escalation Gates).
+- **Sub-agent dispatch**: both modes share `subagent-strategy.md`; do not duplicate.
 
 ## Known Gotchas
 
-- **不要同時輸入兩個模式觸發詞**：`/haiku-pilot /sonnet-pilot` 同時輸入 → 以最後觸發者為準。
-- **Sonnet 模式不是「永遠用 Opus」**：Opus 只在量化閘門觸發時出場；Sonnet 模式的目標是以 Sonnet 達到 Opus 品質，而非替代 Opus。
-- **Session 結束後不繼承**：新 session 回到 haiku-pilot 預設；每個需要品質優先的 session 要重啟動。
+- **Don't enter both mode triggers at once**: typing `/haiku-pilot /sonnet-pilot` together → the last trigger wins.
+- **Sonnet mode is not "always use Opus"**: Opus only appears when a quantified gate fires; the goal of Sonnet mode is to reach Opus-level quality with Sonnet, not to replace Opus.
+- **Does not carry over after the session ends**: a new session reverts to the haiku-pilot default; every quality-first session must be re-activated.
