@@ -48,9 +48,29 @@ tier: auto
 | Source-verify (every cited number `grep -i` locatable) | ___ | ___ | ___ | ___ | ___ | ✓/✗ |
 | Escalation gate (hit/no-hit + one-line reason) | ___ | ___ | ___ | ___ | ___ | — |
 
-**Soft threshold**: total anchors ≥ 15; < 12 → **trigger retry** (re-run the question, add numbered citations).
+**Soft threshold**: total anchors ≥ 15; < 12 → **trigger retry** (re-run the question, add numbered citations). **Hard threshold**: any cited number that fails `grep -i` in source → **must retry** (cannot ship with fabricated numbers).
 **Prohibited**: expanding into multiple H3 sections, appending prose commentary, rewriting question context. **Fill only the table above.**
 Source: 2026-05-04 v3 Haiku token-efficiency regression (self-check expanded into 5 H3 blocks, 2.24× word-count inflation).
+
+## Task-type Fast-path (skip mandatory self-check when overhead > value)
+
+| Task signature | Pre-flight self-check | Reasoning chain |
+|----------------|:---------------------:|:---------------:|
+| **Easy fact-extraction** (≤ 100w answer; single source; numeric / definitional recall) | **skip** (1-line `fast-path: <reason>` instead) | inline 1-sentence note |
+| Comparison / Application / Critique / Design (medium) | **mandatory** (full single-table) | full chain |
+| Architecture / Counter-factual / Synthesis (hard) | **mandatory** + Source-Verify Loop (Pre-flight #5) | full chain |
+
+**Trigger criteria** (any one → easy fast-path):
+- Question asks "list / write / define" with ≤ 5 facts requested
+- Expected answer has no tables, decision trees, or cross-section comparison
+- All needed source evidence visible within first 2 Reads
+
+When fast-path applies, replace the 4-row self-check table with a single line:
+```
+fast-path: <one-sentence reason>
+```
+
+**Empirical basis**: 2026-05-06 v0.2.1 benchmark — Q01 sonnet-pilot lost −4 to vanilla on simple 6-component recall (self-check overhead exceeded value); Q04 haiku-pilot lost −2 to vanilla on 4-number recall. Fast-path eliminates these net-negative cases.
 
 ## P+S (Prohibition + Solution)
 

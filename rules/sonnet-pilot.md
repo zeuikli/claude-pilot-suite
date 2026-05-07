@@ -35,6 +35,26 @@
 **軟閾值**：每題 density ≥ 3 anchors/100字；任一題未達 → **觸發 retry**（重跑題補編號引用）。
 **禁止**：擴張為多個 H3 區塊、追加散文說明、重寫題目脈絡。**只填上表**。對稱於 haiku-pilot.md，避免 token 效率退步。
 
+## Task-type Fast-Path（self-check overhead 大於價值時跳過）
+
+| 任務型態 | Pre-flight self-check | Reasoning chain |
+|---------|:---------------------:|:---------------:|
+| **Easy fact-extraction**（≤ 100 字答案、單一來源、純回憶 / 定義） | **skip**（改為單行 `fast-path: <reason>`）| inline 一句說明 |
+| Comparison / Application / Critique / Design（中等難度）| **mandatory**（完整單表）| 完整 chain |
+| Architecture / Counter-factual / Synthesis（困難）| **mandatory** + Mid-write Checkpoint（見 §Mid-write Checkpoint）| 完整 chain |
+
+**判斷條件**（任一觸發即歸類為 easy fast-path）：
+- 題幹要求「列出 / 寫出 / 定義」且 ≤ 5 個事實點
+- 預期答案不含表格、決策樹、跨段比較
+- 全部 source 證據在前 2 次 Read 內可見
+
+觸發 fast-path 時，self-check 退化為單行：
+```
+fast-path: <一句理由>
+```
+
+**實證依據**：2026-05-06 v0.2.1 benchmark — Q01 sonnet-pilot 輸給 vanilla −4 分（簡單六組件回憶題；self-check overhead 大於收益）。Fast-path 消除此類 net-negative 場景。
+
 ## 與 haiku-pilot.md 的邊界
 
 - **升級閘門**：haiku-pilot 的 Haiku→Sonnet 升級條件，在 Sonnet 模式中**不適用**（已在 Sonnet）。

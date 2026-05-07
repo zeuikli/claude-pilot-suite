@@ -104,6 +104,7 @@ Identify task type first — skip inapplicable pre-flight steps to reduce overhe
 
 | Task type | Required pre-flight | Skip |
 |-----------|--------------------|----|
+| **Easy recall** (≤ 100w answer; ≤ 5 facts; single source; pure definition / number lookup) | None mandatory; replace self-check with single-line `fast-path: <reason>` | All — direct answer |
 | **Wiki/ref extraction** (summarize, extract, list from a document) | #1 Reference Pattern, G-02 Upgrade Eval, G-03 Anti-pattern Check, Self-check template | #3 Reasoning Chain, #5 Intermediate Checkpoint |
 | **Code implementation** (bug fix, feature, refactor) | #2 Decision-Log, #3 Reasoning Chain, #4 Self-Review Loop | G-02, G-03, Self-check template |
 | **Multi-step agentic** (> 3 independent steps) | All pre-flight; especially #5 Intermediate Checkpoint | — |

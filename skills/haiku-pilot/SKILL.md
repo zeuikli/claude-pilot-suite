@@ -109,6 +109,17 @@ If any cited number fails grep, **rewrite that paragraph** before completion. **
 
 > This router does NOT duplicate the full skill directory. See your workspace's skill resolver / index for the full list.
 
+### Task-Type Fast-Path (skip mandatory pre-flight when overhead > value)
+
+| Task type | Required pre-flight | Self-check |
+|-----------|--------------------|------------|
+| **Easy recall** (≤ 100w answer; ≤ 5 facts; single source; pure definition / number lookup) | #4 Citation Anchor only (no #2 Think-Before, no #3 Diff-Review) | single-line `fast-path: <reason>` |
+| **Wiki / ref citation** (multi-paragraph extraction with anchors) | #4 Citation Anchor + #5 Source-Verify | full single-table self-check |
+| **Code task** (any LoC) | #1 Reference Pattern + #2 Think-Before-Coding + #3 Diff-Review | n/a (code task, not citation) |
+| **Architecture / counter-factual / synthesis** | All 6 pre-flight checks | mandatory single-table |
+
+> Empirical basis: 2026-05-06 v0.2.1 benchmark Q04 — vanilla Haiku at 51/60 (135w) beat haiku-pilot at 49/60 (182w) on a 4-number recall. Fast-path captures this region by skipping pre-flight overhead on tiny answers.
+
 ### Coding tasks
 
 | Task | Sub-agent (suggested) | Model |
