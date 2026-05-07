@@ -2,6 +2,13 @@
 
 > Replace this file's contents with your project specifics. Keep the
 > `## Pilot Suite Rules` section to load the suite.
+>
+> **Suite version**: 0.3.0 (2026-05-07) — Source-Verify gate (haiku Pre-flight #5), Task-type Fast-path (both modes), Mid-Write Outline Verification (sonnet Pre-flight #6)
+>
+> **Changelog (v0.3.0)**:
+> - **Haiku Pre-flight #5 — Source-Verify**: every cited number / model name / verbatim quote must be locatable via `grep -i` in the source file before completion; targets 5/20 fabrication cases from v0.2.1 benchmark
+> - **Task-type Fast-path (both)**: easy fact-extraction tasks (≤100w, ≤5 facts, single source) skip the self-check table and emit a single `fast-path: <reason>` line; eliminates net-negative overhead on tiny answers (Q01/Q04 from v0.2.1)
+> - **Sonnet Pre-flight #6 — Mid-Write Outline Verification**: on architecture / counter-factual / synthesis tasks, pause at ~200w drafted and verify scope / projected total word count / mandatory-citation coverage; prevents runaway answers (Q17/Q18: 750w, 2/3 required numbers missing)
 
 ---
 
@@ -50,7 +57,7 @@ These are the always-on baseline rules. They establish:
 - Sub-agent delegation criteria + advisor mode (`subagent-strategy.md`)
 - Context window monitoring + compact strategy (`context-management.md`)
 - Plain-text output formatting — no fluff / no preamble / scannable lists (`output-discipline.md`)
-- Mode switching + escalation gates for both pilot modes (`haiku-pilot.md`, `sonnet-pilot.md`)
+- Mode switching + escalation gates + 6-step pre-flight enforcement for both pilot modes (`haiku-pilot.md`, `sonnet-pilot.md`)
 
 ```
 @.claude/rules/core.md
@@ -62,8 +69,8 @@ These are the always-on baseline rules. They establish:
 ```
 
 > **On-demand SKILLs** load only when their trigger phrase appears in a message:
-> - `haiku-pilot` / `haiku mode` / `haiku` → activates Haiku Pilot (cost-first)
-> - `sonnet-pilot` / `sonnet mode` / `sonnet` → activates Sonnet Pilot (quality-first)
+> - `haiku-pilot` / `haiku mode` / `haiku` → activates Haiku Pilot (cost-first; 6-step pre-flight incl. Source-Verify gate + Task-type Fast-path)
+> - `sonnet-pilot` / `sonnet mode` / `sonnet` → activates Sonnet Pilot (quality-first; 6-step pre-flight incl. Mid-Write Checkpoint + Task-type Fast-path)
 
 ---
 
@@ -74,6 +81,20 @@ These are the always-on baseline rules. They establish:
 **When to use which**:
 - **Haiku Pilot**: routine code edits, surgical bug fixes, doc updates, single-file research
 - **Sonnet Pilot**: cross-module implementation, multi-step architecture work, security design, anything you'd normally reach for Opus
+
+**Haiku Pilot — key enforcements (v0.3.0)**:
+- Pre-flight #5 Source-Verify: every cited number / model name / verbatim quote must be locatable via `grep -i` in the source before completion
+- Task-type Fast-path: easy recall tasks (≤100w, ≤5 facts, single source) emit `fast-path: <reason>` instead of the full self-check table
+- Escalation gates: ≥3 failures → Sonnet; ≥10 files → Sonnet; architecture/security → Opus or `advisor()`
+
+**Sonnet Pilot — 6-step pre-flight (v0.3.0)**:
+1. Reference Pattern — point to a file, not abstract
+2. Decision-Log — `Choice: … / Rejected: … — Reason: …`
+3. Reasoning Chain Before Code
+4. Self-Review Loop — `git diff --stat` + per-file explanation
+5. Intermediate Checkpoint — pause and verify per step
+6. Mid-Write Outline Verification — at ~200w drafted on arch/counter-factual/synthesis tasks, verify scope / projected total / mandatory-citation coverage
+- Task-type Fast-path: same as Haiku Pilot for easy recall tasks
 
 **Both modes escalate to Opus only on quantitative gates** (see `haiku-pilot.md` § Escalation Gates and `sonnet-pilot.md` § Escalation Gate).
 
