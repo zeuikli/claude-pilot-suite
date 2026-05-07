@@ -1,6 +1,6 @@
 # Claude Pilot Suite
 
-> **Version**: 0.2 (2026-05-06 — G-01~G-08 gap fixes from pilot-benchmark)
+> **Version**: 0.3.0 (2026-05-07 — Source-Verify gate, Easy-recall fast-path, Mid-Write Checkpoint from v0.2.1 benchmark gap analysis)
 > **License**: MIT
 > **Validated on**: Claude Sonnet 4.6 + Haiku 4.5 + Opus 4.7 (4-iteration benchmark, n=10 task corpus)
 
@@ -30,8 +30,8 @@ claude-pilot-suite/
 │   ├── haiku-pilot.md                Mode declaration + escalation gates (Haiku→Sonnet/Opus)
 │   └── sonnet-pilot.md               Mode declaration + escalation gates (Sonnet→Opus)
 ├── skills/                         # On-demand playbooks (loaded only when triggered)
-│   ├── haiku-pilot/SKILL.md          Default-Haiku execution + 5-step pre-flight
-│   └── sonnet-pilot/SKILL.md         Quality-first Sonnet execution + 5-step pre-flight
+│   ├── haiku-pilot/SKILL.md          Default-Haiku execution + 6-step pre-flight (incl. Source-Verify gate)
+│   └── sonnet-pilot/SKILL.md         Quality-first Sonnet execution + 6-step pre-flight (incl. Mid-Write Checkpoint)
 ├── examples/
 │   └── CLAUDE.md.template            Sample CLAUDE.md to integrate the suite
 ├── README.md
@@ -69,6 +69,7 @@ Trigger: "sonnet" / "Sonnet" / "Sonnet mode" / "sonnet-pilot"
 3. Reasoning Chain Before Code
 4. Self-Review Loop (`git diff --stat` + per-file explanation)
 5. Intermediate Checkpoint (pause and verify per step)
+6. Mid-Write Outline Verification (architecture / counter-factual / synthesis tasks: at ~200w drafted, verify scope / projected total / mandatory-citation coverage — catches runaway answers while still cheap to fix)
 
 **Escalation gate to Opus**: stricter than haiku-pilot's, because Opus is 5× the cost.
 
@@ -87,6 +88,8 @@ The suite is the synthesis of 4 benchmark iterations measuring how prompt struct
 | Anti-expansion self-check tables prevent 2.24× word inflation | Self-Review Loop uses single-table format |
 | Sonnet's confidence bias = skip self-review unless externally enforced | Pre-flight #4 is mandatory in Sonnet Pilot |
 | Haiku's tendency to skip assumption disclosure | Pre-flight #2 enforces it |
+| Haiku fabricates numbers on hard citation tasks (5/20 cases in v0.2.1 benchmark) | Pre-flight #5 Source-Verify gate (`grep -i` every cited number against source) |
+| Self-check overhead can exceed value on tiny answers (Q01/Q04 net-negative vs vanilla) | Task-type Fast-path: easy recall replaces the self-check table with a one-line `fast-path: <reason>` |
 
 ---
 

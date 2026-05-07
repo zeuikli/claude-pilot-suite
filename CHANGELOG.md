@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.0] - 2026-05-07
+
+### Added
+
+- **`rules/haiku-pilot.md`** + **`skills/haiku-pilot/SKILL.md`**: New Pre-flight #5 **Source-Verify gate** for citation tasks. Every cited number / model name / verbatim quote must be locatable via `grep -i` in the source file before completion. Self-check table gains a Source-verify row; soft threshold gains a hard threshold for fabricated numbers. Targets the 5 fabrication cases (Q06/Q12/Q13/Q17/Q18) caught in v0.2.1 benchmark; expected +20–30% Haiku→Opus gap closure.
+- **`rules/haiku-pilot.md`** + **`rules/sonnet-pilot.md`** + **`skills/haiku-pilot/SKILL.md`** + **`skills/sonnet-pilot/SKILL.md`**: New **Task-type Fast-path** section. Easy fact-extraction tasks (≤ 100w answer, ≤ 5 facts, single source) skip the mandatory self-check and replace it with a single `fast-path: <reason>` line. Eliminates the net-negative cases observed in v0.2.1 benchmark (Q01 sonnet-pilot −4 vs vanilla; Q04 haiku-pilot −2 vs vanilla).
+- **`rules/sonnet-pilot.md`** + **`skills/sonnet-pilot/SKILL.md`**: New Pre-flight #6 **Mid-Write Outline Verification** for architecture / counter-factual / synthesis tasks. At ~200 words drafted, pause and verify scope / projected total word count / mandatory-citation coverage. Targets the runaway pattern in benchmark Q17/Q18 (sonnet-pilot 750w with 2/3 required numbers missing, lost −6 to Opus).
+
+### Changed
+
+- **`skills/haiku-pilot/SKILL.md`**: Pre-flight § "Content-First Structure" renumbered from #5 to #6 to make room for Source-Verify Loop at #5.
+- **`skills/haiku-pilot/SKILL.md`** § Verification: added Source-Verify (Pre-flight #5) compliance row.
+- **`skills/haiku-pilot/SKILL.md`** § Known Gotchas: added "Number fabrication on hard tasks" entry pointing at Pre-flight #5 as the mitigation.
+
 ## [0.2.1] - 2026-05-06
 
 ### Added
