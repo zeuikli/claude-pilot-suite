@@ -149,14 +149,6 @@ If you don't have specialized agents, the `general-purpose` agent (always availa
 
 ---
 
-## What this is NOT
-
-- **Not a model selector**: this suite assumes you already have access to Haiku 4.5, Sonnet 4.6, and Opus 4.7 via Claude Code. It doesn't change which models are available.
-- **Not a billing tool**: the cost claims are calculated from public pricing; actual savings depend on cache hit rate, input/output ratio, and your task mix. Use a separate cost-tracking tool to measure real spending.
-- **Not a code reviewer**: the Self-Review Loop dispatches `quick-code-reviewer` if you have one; otherwise the loop is just a `git diff --stat` checklist.
-
----
-
 ## Compatibility with other Claude Code skills
 
 - **`output-discipline.md`** (included): plain-text formatting baseline; both pilot SKILLs reference it.
