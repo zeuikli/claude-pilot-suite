@@ -1,6 +1,6 @@
 # Claude Pilot Suite
 
-> **Version**: 0.3.0 (2026-05-07 — Source-Verify gate, Easy-recall fast-path, Mid-Write Checkpoint from v0.2.1 benchmark gap analysis)
+> **Version**: 0.3.1 (2026-05-07 — doc fixes: English rules, accurate triggers, template sync, compatibility cleanup)
 > **License**: MIT
 > **Validated on**: Claude Sonnet 4.6 + Haiku 4.5 + Opus 4.7 (4-iteration benchmark, n=10 task corpus)
 
@@ -145,6 +145,14 @@ If you don't have specialized agents, the `general-purpose` agent (always availa
 
 - **Not a model selector**: this suite assumes you already have access to Haiku 4.5, Sonnet 4.6, and Opus 4.7 via Claude Code. It doesn't change which models are available.
 - **Not a billing tool**: the cost claims are calculated from public pricing; actual savings depend on cache hit rate, input/output ratio, and your task mix. Use a separate cost-tracking tool to measure real savings.
+- **Not a code reviewer**: the Self-Review Loop dispatches `quick-code-reviewer` if you have one; otherwise the loop is just a `git diff --stat` checklist.
+
+---
+
+## What this is NOT
+
+- **Not a model selector**: this suite assumes you already have access to Haiku 4.5, Sonnet 4.6, and Opus 4.7 via Claude Code. It doesn't change which models are available.
+- **Not a billing tool**: the cost claims are calculated from public pricing; actual savings depend on cache hit rate, input/output ratio, and your task mix. Use a separate cost-tracking tool to measure real spending.
 - **Not a code reviewer**: the Self-Review Loop dispatches `quick-code-reviewer` if you have one; otherwise the loop is just a `git diff --stat` checklist.
 
 ---
