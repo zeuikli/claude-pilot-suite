@@ -1,7 +1,7 @@
 {
   "name": "claude-pilot-suite",
-  "version": "0.3.1",
-  "description": "Portable execution playbook for Claude Code — two pilot modes (Haiku-first, Sonnet-first) that achieve near-Opus quality at 55–85% lower cost via sub-agent delegation and quantitative escalation gates.",
+  "version": "0.4.1",
+  "description": "Portable execution playbook for Claude Code — three pilot modes (Haiku-first, Sonnet-first, Opus-first ceiling-elevation) covering cost-optimal to quality-ceiling task execution via sub-agent delegation, quantitative escalation gates, and beyond-vanilla-Opus mechanisms (Reverse-Advisor / Parallel Hypotheses / CAR / Decision-Log / Meta-Harness).",
   "author": {
     "name": "Zeuik Li",
     "email": "aids4002004@gmail.com",
@@ -13,9 +13,10 @@
     "type": "git",
     "url": "https://github.com/zeuikli/claude-pilot-suite.git"
   },
-  "keywords": ["claude-code", "skill", "pilot", "haiku", "sonnet", "haiku-pilot", "sonnet-pilot", "cost-optimization", "agent-delegation"],
+  "keywords": ["claude-code", "skill", "pilot", "haiku", "sonnet", "opus", "haiku-pilot", "sonnet-pilot", "opus-pilot", "ceiling-elevation", "cost-optimization", "agent-delegation", "harness-engineering"],
   "triggers": {
     "haiku-pilot": ["haiku", "Haiku", "Haiku mode", "haiku-pilot"],
-    "sonnet-pilot": ["sonnet", "Sonnet", "Sonnet mode", "sonnet-pilot"]
+    "sonnet-pilot": ["sonnet", "Sonnet", "Sonnet mode", "sonnet-pilot"],
+    "opus-pilot": ["opus", "Opus", "Opus mode", "opus-pilot"]
   }
 }

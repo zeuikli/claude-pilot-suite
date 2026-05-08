@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.1] - 2026-05-08
+
+### Fixed
+
+5 corrections derived from the 2026-05-08 6-agent × 10-question pilot-vs-vanilla benchmark (`research/analysis/2026-05-08-pilot-vs-vanilla-6agent-10q-benchmark/` in the integrator repo, e.g. `zeuikli/cc-workspace`). Each correction targets a measurable gap observed when Sonnet+Pilot or Haiku+Pilot underperformed vanilla Opus 4.7 on hard-task subsets.
+
+- **`rules/sonnet-pilot.md`** § Self-check Template — added **hard-cap word-count enforcement**: hard-task questions over 800w must rewrite (cannot append apology); word-count row must be filled after `wc -w` actually runs on the draft. Targets the A2 (Sonnet+Pilot) Q08–Q10 over-budget pattern (Q10 1115w / +39.4% over).
+- **`rules/haiku-pilot.md`** § Self-check Template — symmetric hard-cap word-count enforcement. Targets A1 (Haiku+Pilot) Q10 actual 973w (+21.6% over budget) despite self-reporting within budget.
+- **`rules/haiku-pilot.md`** + **`skills/haiku-pilot/SKILL.md`** § Pre-flight #4 — anchor count requirement strengthened: hard tasks now require **≥ 5 structured anchors per paragraph** (vs ≥ 3 for easy/medium); `(P0X §Y.Z)` format is the preferred form. Targets the Haiku-Pilot D2 anchor-density collapse from 7/100w (medium) to 1/100w (hard) observed in the benchmark.
+- **`skills/sonnet-pilot/SKILL.md`** § Escalation Gate — added explicit trigger condition: "Q type tagged Architecture / Counter-factual / Synthesis (hard)" auto-escalates to Opus; prevents hard-task gate "no-hit" misclassification. Targets A2 Q10 misclassification (lost −5 to A3 on architecture-hard).
+- **`skills/sonnet-pilot/SKILL.md`** § Per-Session Pre-flight — added new **#7 Source-Verify (Line-Level)** step mirroring haiku-pilot SKILL #5 but stricter: every numeric citation on hard tasks must include `(P0X §Y.Z:LineN)` (line-number granularity). Closes the 0.5-point D1 gap between A2 (D1=9.5) and A3 (D1=10.0) on the benchmark.
+
+### Notes
+
+- Patch release: no new SKILL files, no new triggers, no rule schema change. Existing v0.4.0 install paths (clone+symlink, copy, plugin install) continue to work without re-install.
+- Verification methodology — see `research/analysis/2026-05-08-pilot-vs-vanilla-6agent-10q-benchmark/final-report-zh-TW.md` § 8 in the integrator repo for source-of-truth reasoning behind each correction.
+
+## [0.4.0] - 2026-05-07
+
+### Added
+
+- **`rules/opus-pilot.md`** (new): mode declaration for Opus Pilot. Activates on triggers `opus` / `Opus` / `Opus mode` / `opus-pilot` (symmetric with haiku/sonnet 4-trigger pattern). Sub-mode modifiers: `Opus 1M` (1M context), `Opus xhigh` (extended thinking). Self-check template symmetric with haiku-pilot / sonnet-pilot to prevent token-efficiency regression.
+- **`skills/opus-pilot/SKILL.md`** (new): ceiling-elevation playbook for Opus 4.7. Implements 5 mechanisms (Reverse-Advisor Loop / Parallel Hypotheses Synthesis / CAR Explicitness / Decision-Log Externalization / Meta-Harness Filesystem Loop) and 3 Opus-specific pre-flights (Ambiguity Surfacing / Start-Simple-First / Down-Delegation Eval). Task-type fast-path consistent with haiku/sonnet-pilot. **Hard rule**: Opus is the ceiling — no upward escalation; only sub-agent down-delegation to Sonnet/Haiku per `subagent-strategy.md`.
+- **Citation grounding** for opus-pilot: 9 papers (P01 AgentFlow / arxiv 2604.20801, P02 Confucius / arxiv 2512.10398, P03 Meta-Harness / arxiv 2603.28052, P04 NLAH / arxiv 2603.25723, P05 COMPOSITE-STEM / arxiv 2604.09836, P06 Agent Harness Survey / preprints 202604.0428, P07 CAR / preprints 202603.1756, P08 OpenDev / arxiv 2603.05344, P09 Skill Issue blog / humanlayer.dev) + P10 AgentOpt as foundational orchestration insight (HotpotQA 31.71% solo → 74.27% orchestrated).
+- **`README.md`** + **`INSTALL.md`** + **`examples/CLAUDE.md.template`**: synced to advertise the third pilot mode; install / uninstall paths updated.
+
+### Notes
+
+- `opus-pilot` is **not** the default. Most tasks should run on `haiku-pilot` (default) or `sonnet-pilot`. `opus-pilot` fires only on hard analytical tasks (architecture decisions, counter-factual reasoning, synthesis across multiple sources, threat modeling) where vanilla Opus is the baseline to beat.
+- Verification methodology — see `research/analysis/2026-05-07-opus-pilot-skill-20q-benchmark/` in the integrator repo (e.g. `zeuikli/cc-workspace`).
+
 ## [0.3.1] - 2026-05-07
 
 ### Fixed
