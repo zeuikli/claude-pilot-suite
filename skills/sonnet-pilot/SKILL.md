@@ -110,6 +110,19 @@ For tasks with ≥ 3 independent steps, **pause and verify** after each:
 
 **Skip when**: Easy recall, Wiki/ref extraction, or Code implementation tasks (where the gate adds overhead with no expected catch).
 
+### 7. Source-Verify (Line-Level, required for paper / wiki / spec citation tasks)
+
+After drafting any answer that cites numbers, model names, verbatim quotes, or paper conclusions, run this 4-step loop **before declaring done**:
+
+1. **Identify**: list every numeric / proper-noun / verbatim citation in your draft.
+2. **Locate**: for each, run `grep -in "<term>" <source-path>` to obtain the actual line number.
+3. **Annotate**: replace inline anchor with `(P0X §Y.Z:LineN)` format — line number is the key Sonnet-Pilot upgrade vs haiku-pilot's section-only verification.
+4. **Verify**: re-read the source at that line; if the context contradicts your phrasing → rewrite the citation, do not append a hedge.
+
+**Hard gate**: every numeric citation in a hard-task answer must include `:LineN`. Citations without line numbers fail D1 audit and require a retry.
+
+> Empirical basis: 2026-05-08 6-agent 10Q benchmark — A3 (Opus+Pilot) earned D1 = 10/10 because every citation included grep-verified line numbers; A2 (Sonnet+Pilot) earned D1 = 9.5/10 because Source-Verify was section-level only. Closing this 0.5-point gap is the highest-ROI Sonnet-Pilot lever per § Verification analysis.
+
 ---
 
 ## Per-Task Router
@@ -190,6 +203,7 @@ This check takes < 30 seconds and prevents the most common source of D2 point lo
 **Escalate to Opus 4.7** (any one true):
 - Real global architecture decision (affects multiple services' design)
 - Security architecture design (not just security code review — designing the auth system)
+- **Q type tagged Architecture / Counter-factual / Synthesis (hard)** per § Task-Type Fast-Path table — auto-escalate; do not classify hard-tasks as gate "no-hit". Source: 2026-05-08 6-agent 10Q benchmark Q10 (architecture hard) — A2 (Sonnet+Pilot) self-classified as no-hit and lost −5 to A3 (Opus+Pilot).
 - Same problem failed ≥ 3 times AND not a context issue
 - `advisor()` explicitly says "this needs Opus"
 - User explicitly says "use Opus"
@@ -272,7 +286,7 @@ Quality target: Sonnet + good context ≈ Opus baseline; when Opus does fire, it
 - `output-discipline.md` rule = output formatting baseline
 - `advisor()` = bridge from Sonnet session to Opus opinion (haiku-pilot uses rarely; this SKILL uses frequently)
 - (Optional) `harness-eval` skill = harness health audit
-- (Optional) `citation-discipline` skill = cross-source citation enforcement
+- Citation enforcement is **built into this SKILL** (Pre-flight #4 mirrored from haiku-pilot). Per-source-type anchor vocabulary: shared reference `anchor-dictionary.md` (if available alongside the suite).
 
 This SKILL is the **execution layer**, not the decision layer.
 

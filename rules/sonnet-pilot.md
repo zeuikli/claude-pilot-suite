@@ -45,6 +45,7 @@ tier: auto
 | Sonnet→Opus gate (hit/no-hit + one-line reason) | ___ | ___ | ___ | ___ | ___ | — |
 
 **Soft threshold**: per-question density ≥ 3 anchors/100w; any question below threshold → **trigger retry** (re-run the question, add numbered citations).
+**Hard cap (word count, hard tasks)**: architecture / counter-factual / synthesis questions with `wc -w` > 800 → **must rewrite to fit**, not append apology. Word-count row must be filled **after** `wc -w` actually run on the draft (not eyeball-estimated; eyeball estimation is a violation). Source: 2026-05-08 6-agent 10Q benchmark — A2 (Sonnet+Pilot) Q08/Q09/Q10 all over budget (Q10 1115w vs 800w, +39.4%) due to self-estimated word count.
 **Prohibited**: expanding into multiple H3 sections, appending prose commentary, rewriting question context. **Fill only the table above.** Symmetric to `haiku-pilot.md` to avoid token-efficiency regression.
 
 ## Task-type Fast-path (skip self-check when overhead > value)

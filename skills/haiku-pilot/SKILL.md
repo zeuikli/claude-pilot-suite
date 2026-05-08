@@ -62,14 +62,20 @@ git status
 ### 4. Citation Anchor Enforcement
 
 When citing wiki / docs / spec for numbers, conclusions, or anti-patterns, attach a structured anchor:
+- `(P0X §Y.Z)` — paper section ref (e.g. `(P03 §4.2)`) — **preferred** for paper-grounded citations
 - `(<source> Step N)` — wiki step number
 - `(anti-pattern #N)` — wiki anti-pattern number
 - `(<file>:line-range)` — code / config line ref
 
+**Anchor count requirement** (per answer paragraph):
+- Easy / medium tasks: ≥ 3 structured anchors
+- **Hard tasks** (architecture / counter-factual / synthesis): **≥ 5 structured anchors** — `(P0X §Y.Z)` format strongly preferred
+
 If no precise anchor available → tag `[unverified]`. Never fake a source.
 Violation: retry that paragraph; do NOT declare done.
 
-> Empirical basis: anchor density discrepancy is the primary driver of citation accuracy variance between Haiku and Sonnet/Opus on benchmark tasks. See `citation-discipline` skill if installed.
+> Empirical basis: anchor density discrepancy is the primary driver of citation accuracy variance between Haiku and Sonnet/Opus on benchmark tasks. 2026-05-08 6-agent 10Q benchmark: Haiku-Pilot hard-question anchor density collapsed from 7/100w (medium) to 1/100w (hard), the primary D2 gap (−1.0) vs vanilla Opus. Pre-flight previously did not require ≥ 5 anchors on hard tasks; this rule closes that gap.
+> Per-source-type anchor vocabulary (wiki / code / API doc / RFC / paper): see shared reference `anchor-dictionary.md` (suite-internal) if available.
 
 ### 5. Source-Verify Loop (required for citation tasks)
 
@@ -85,7 +91,7 @@ After drafting an answer that cites numbers, model names, or verbatim quotes, ru
 | Fabricated benchmark scores | Q12: "Opus+HumanLayer=55%, Haiku=40%" — neither in source |
 | Non-existent model version | Q13: "Claude 3.5 Opus" — no such Anthropic-published version |
 | Invented latency / token claims | Q17: "p99 < 100ms / 500K tokens" — not in P08 |
-| Vague paper-grounded targets | Q18: "失敗率 ↓ 60–80%" — paper has no such range |
+| Vague paper-grounded targets | Q18: "failure rate ↓ 60–80%" — paper has no such range |
 
 If any cited number fails grep, **rewrite that paragraph** before completion. **Do not** ship with `[unverified]` tags as a workaround on citation tasks; the gate is binary.
 
@@ -282,7 +288,7 @@ Savings: 1 - 6/45 = 86.7%
 - This SKILL = "Haiku-default router + escalation gate"
 - `sonnet-pilot` SKILL = quality-first counterpart (the same suite covers both modes)
 - (Optional) `harness-eval` skill = harness health audit
-- (Optional) `citation-discipline` skill = cross-source citation enforcement (this SKILL § Pre-flight #4 is wiki-default; cross-source needs the dedicated skill)
+- Citation enforcement is **built into this SKILL** (Pre-flight #4 Anchor + #5 Source-Verify). Per-source-type anchor vocabulary: shared reference `anchor-dictionary.md` (if available alongside the suite).
 
 This SKILL is the **execution layer**, not the decision layer.
 

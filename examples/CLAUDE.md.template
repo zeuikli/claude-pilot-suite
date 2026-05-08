@@ -3,12 +3,14 @@
 > Replace this file's contents with your project specifics. Keep the
 > `## Pilot Suite Rules` section to load the suite.
 >
-> **Suite version**: 0.3.0 (2026-05-07) — Source-Verify gate (haiku Pre-flight #5), Task-type Fast-path (both modes), Mid-Write Outline Verification (sonnet Pre-flight #6)
+> **Suite version**: 0.4.1 (2026-05-08) — opus-pilot added; 5 benchmark-driven fixes for haiku/sonnet-pilot
 >
-> **Changelog (v0.3.0)**:
-> - **Haiku Pre-flight #5 — Source-Verify**: every cited number / model name / verbatim quote must be locatable via `grep -i` in the source file before completion; targets 5/20 fabrication cases from v0.2.1 benchmark
-> - **Task-type Fast-path (both)**: easy fact-extraction tasks (≤100w, ≤5 facts, single source) skip the self-check table and emit a single `fast-path: <reason>` line; eliminates net-negative overhead on tiny answers (Q01/Q04 from v0.2.1)
-> - **Sonnet Pre-flight #6 — Mid-Write Outline Verification**: on architecture / counter-factual / synthesis tasks, pause at ~200w drafted and verify scope / projected total word count / mandatory-citation coverage; prevents runaway answers (Q17/Q18: 750w, 2/3 required numbers missing)
+> **Changelog (v0.4.1)**:
+> - **Opus Pilot added** (`rules/opus-pilot.md` + `skills/opus-pilot/SKILL.md`): ceiling-elevation mode for Opus 4.7; 5 mechanisms + 3 pre-flights; trigger: `opus` / `Opus` / `Opus mode` / `opus-pilot`
+> - **Haiku/Sonnet self-check hard cap**: hard-task questions (arch/counter-factual/synthesis) over 800w must rewrite — cannot append apology; `wc -w` gate enforced
+> - **Haiku Pre-flight #4 strengthened**: hard tasks now require ≥5 structured anchors/paragraph (vs ≥3 for easy/medium); targets anchor density collapse (7/100w → 1/100w on hard tasks)
+> - **Sonnet escalation gate**: Architecture / Counter-factual / Synthesis Q type auto-escalates; prevents hard-task gate misclassification
+> - **Sonnet Pre-flight #7 added**: Source-Verify line-level — every numeric citation on hard tasks requires `(P0X §Y.Z:LineN)`
 
 ---
 
@@ -27,7 +29,7 @@
 
 ## Loading Strategy
 
-This CLAUDE.md auto-loads on every session. Six rule files are pinned via `@-import` below; on-demand SKILLs (in `.claude/skills/*/SKILL.md`) load only when triggered.
+This CLAUDE.md auto-loads on every session. Seven rule files are pinned via `@-import` below; on-demand SKILLs (in `.claude/skills/*/SKILL.md`) load only when triggered.
 
 For task-specific knowledge that doesn't need to load every session, write it as a SKILL with a clear trigger phrase rather than inlining here.
 
@@ -57,7 +59,7 @@ These are the always-on baseline rules. They establish:
 - Sub-agent delegation criteria + advisor mode (`subagent-strategy.md`)
 - Context window monitoring + compact strategy (`context-management.md`)
 - Plain-text output formatting — no fluff / no preamble / scannable lists (`output-discipline.md`)
-- Mode switching + escalation gates + 6-step pre-flight enforcement for both pilot modes (`haiku-pilot.md`, `sonnet-pilot.md`)
+- Mode switching + escalation gates + pre-flight enforcement for all three pilot modes (`haiku-pilot.md`, `sonnet-pilot.md`, `opus-pilot.md`)
 
 ```
 @.claude/rules/core.md
@@ -66,37 +68,52 @@ These are the always-on baseline rules. They establish:
 @.claude/rules/output-discipline.md
 @.claude/rules/haiku-pilot.md
 @.claude/rules/sonnet-pilot.md
+@.claude/rules/opus-pilot.md
 ```
 
 > **On-demand SKILLs** load only when their trigger phrase appears in a message:
-> - `haiku-pilot` / `haiku mode` / `haiku` → activates Haiku Pilot (cost-first; 6-step pre-flight incl. Source-Verify gate + Task-type Fast-path)
-> - `sonnet-pilot` / `sonnet mode` / `sonnet` → activates Sonnet Pilot (quality-first; 6-step pre-flight incl. Mid-Write Checkpoint + Task-type Fast-path)
+> - `haiku-pilot` / `haiku mode` / `haiku` → activates Haiku Pilot (cost-first; 7-step pre-flight incl. Source-Verify gate + Task-type Fast-path)
+> - `sonnet-pilot` / `sonnet mode` / `sonnet` → activates Sonnet Pilot (quality-first; 7-step pre-flight incl. Line-Level Source-Verify + Task-type Fast-path)
+> - `opus-pilot` / `opus mode` / `opus` → activates Opus Pilot (ceiling-elevation; 5 mechanisms + 3 Opus-specific pre-flights)
 
 ---
 
 ## Pilot Modes (this suite's main offering)
 
-**Default**: Haiku Pilot (cost-first). Trigger explicit switch: `sonnet-pilot` for quality-first.
+**Default**: Haiku Pilot (cost-first). Trigger explicit switch: `sonnet-pilot` for quality-first, `opus-pilot` for ceiling-elevation.
 
 **When to use which**:
 - **Haiku Pilot**: routine code edits, surgical bug fixes, doc updates, single-file research
 - **Sonnet Pilot**: cross-module implementation, multi-step architecture work, security design, anything you'd normally reach for Opus
+- **Opus Pilot**: architecture decisions, counter-factual reasoning, synthesis across multiple sources, threat modeling — where vanilla Opus is the explicit baseline to beat
 
-**Haiku Pilot — key enforcements (v0.3.0)**:
+**Haiku Pilot — key enforcements (v0.4.1)**:
+- Pre-flight #4 Citation Anchor: ≥3 anchors/paragraph for easy/medium; ≥5 for hard tasks
 - Pre-flight #5 Source-Verify: every cited number / model name / verbatim quote must be locatable via `grep -i` in the source before completion
-- Task-type Fast-path: easy recall tasks (≤100w, ≤5 facts, single source) emit `fast-path: <reason>` instead of the full self-check table
+- Self-check hard cap: hard-task answers over 800w must rewrite (cannot append apology)
+- Task-type Fast-path: easy recall tasks emit `fast-path: <reason>` instead of the full self-check table
 - Escalation gates: ≥3 failures → Sonnet; ≥10 files → Sonnet; architecture/security → Opus or `advisor()`
 
-**Sonnet Pilot — 6-step pre-flight (v0.3.0)**:
+**Sonnet Pilot — 7-step pre-flight (v0.4.1)**:
 1. Reference Pattern — point to a file, not abstract
 2. Decision-Log — `Choice: … / Rejected: … — Reason: …`
 3. Reasoning Chain Before Code
 4. Self-Review Loop — `git diff --stat` + per-file explanation
 5. Intermediate Checkpoint — pause and verify per step
 6. Mid-Write Outline Verification — at ~200w drafted on arch/counter-factual/synthesis tasks, verify scope / projected total / mandatory-citation coverage
-- Task-type Fast-path: same as Haiku Pilot for easy recall tasks
+7. Source-Verify (Line-Level) — every numeric citation on hard tasks requires `(P0X §Y.Z:LineN)`
+- Self-check hard cap: hard-task answers over 800w must rewrite
+- Escalation gate: Architecture / Counter-factual / Synthesis Q type auto-escalates to Opus
 
-**Both modes escalate to Opus only on quantitative gates** (see `haiku-pilot.md` § Escalation Gates and `sonnet-pilot.md` § Escalation Gate).
+**Opus Pilot — 5 ceiling-elevation mechanisms**:
+1. Reverse-Advisor Loop — Opus critiques its own draft before finalizing
+2. Parallel Hypotheses Synthesis — generate N competing hypotheses, merge strongest elements
+3. CAR Explicitness — every claim anchored to Context / Action / Result triples
+4. Decision-Log Externalization — every non-obvious choice logged explicitly
+5. Meta-Harness Filesystem Loop — write plan file and verify after each agentic step
+- Hard rule: Opus is the ceiling — no upward escalation; sub-delegate to Sonnet/Haiku only
+
+**Haiku and Sonnet modes escalate to Opus on quantitative gates** (see respective `rules/` files).
 
 ---
 
