@@ -11,7 +11,7 @@ Four install methods, ordered by Claude Code idiomatic-ness.
 Best for: trying the SKILLs first without committing to file-level integration; lets Claude Code's `/plugin` system manage SKILL lifecycle.
 
 ```bash
-# 1. SKILLs via plugin install (manages skills/haiku-pilot + skills/sonnet-pilot)
+# 1. SKILLs via plugin install (manages skills/haiku-pilot + skills/sonnet-pilot + skills/opus-pilot)
 /plugin install <path-or-url-to-claude-pilot-suite>
 
 # 2. Rules still need copy (rules/ is not plugin-supported)
@@ -46,11 +46,13 @@ ln -s ~/code-shared/claude-pilot-suite/rules/context-management.md .claude/rules
 ln -s ~/code-shared/claude-pilot-suite/rules/output-discipline.md .claude/rules/output-discipline.md
 ln -s ~/code-shared/claude-pilot-suite/rules/haiku-pilot.md       .claude/rules/haiku-pilot.md
 ln -s ~/code-shared/claude-pilot-suite/rules/sonnet-pilot.md      .claude/rules/sonnet-pilot.md
+ln -s ~/code-shared/claude-pilot-suite/rules/opus-pilot.md        .claude/rules/opus-pilot.md
 
 # Symlink SKILL directories (whole folder)
 mkdir -p .claude/skills
 ln -s ~/code-shared/claude-pilot-suite/skills/haiku-pilot   .claude/skills/haiku-pilot
 ln -s ~/code-shared/claude-pilot-suite/skills/sonnet-pilot  .claude/skills/sonnet-pilot
+ln -s ~/code-shared/claude-pilot-suite/skills/opus-pilot    .claude/skills/opus-pilot
 
 # 3. Wire rules into CLAUDE.md (see examples/CLAUDE.md.template)
 ```
@@ -76,6 +78,7 @@ git clone https://github.com/zeuikli/claude-pilot-suite.git /tmp/pilot-suite
 cp /tmp/pilot-suite/rules/*.md            .claude/rules/
 cp -r /tmp/pilot-suite/skills/haiku-pilot  .claude/skills/
 cp -r /tmp/pilot-suite/skills/sonnet-pilot .claude/skills/
+cp -r /tmp/pilot-suite/skills/opus-pilot   .claude/skills/
 rm -rf /tmp/pilot-suite
 
 # Wire rules into CLAUDE.md
@@ -103,8 +106,10 @@ ln -s pilot-suite/rules/context-management.md .claude/rules/context-management.m
 ln -s pilot-suite/rules/output-discipline.md .claude/rules/output-discipline.md
 ln -s pilot-suite/rules/haiku-pilot.md       .claude/rules/haiku-pilot.md
 ln -s pilot-suite/rules/sonnet-pilot.md      .claude/rules/sonnet-pilot.md
+ln -s pilot-suite/rules/opus-pilot.md        .claude/rules/opus-pilot.md
 ln -s pilot-suite/skills/haiku-pilot   .claude/skills/haiku-pilot
 ln -s pilot-suite/skills/sonnet-pilot  .claude/skills/sonnet-pilot
+ln -s pilot-suite/skills/opus-pilot    .claude/skills/opus-pilot
 
 # Wire rules into CLAUDE.md
 ```
@@ -130,6 +135,7 @@ After installing files, your CLAUDE.md must `@-import` the rules so they auto-lo
 - @.claude/rules/output-discipline.md
 - @.claude/rules/haiku-pilot.md
 - @.claude/rules/sonnet-pilot.md
+- @.claude/rules/opus-pilot.md
 ```
 
 See `examples/CLAUDE.md.template` for a full example with explanations.
@@ -142,6 +148,7 @@ In a fresh Claude Code session, type:
 
 - `haiku-pilot` — activates Haiku Pilot (cost-first mode)
 - `sonnet-pilot` — activates Sonnet Pilot (quality-first mode)
+- `opus-pilot` — activates Opus Pilot (ceiling-elevation mode)
 
 You should see Claude acknowledge mode switch + load the SKILL playbook. Try a task; pre-flight should fire.
 
@@ -162,8 +169,8 @@ If you skip customization, the suite still works but with degraded specificity (
 
 For Method 2 (symlink):
 ```bash
-rm .claude/rules/{core,subagent-strategy,context-management,output-discipline,haiku-pilot,sonnet-pilot}.md
-rm -r .claude/skills/{haiku,sonnet}-pilot
+rm .claude/rules/{core,subagent-strategy,context-management,output-discipline,haiku-pilot,sonnet-pilot,opus-pilot}.md
+rm -r .claude/skills/{haiku,sonnet,opus}-pilot
 # Remove the @-imports from CLAUDE.md
 ```
 
@@ -183,7 +190,7 @@ Check:
 ### "Triggers" don't activate the SKILL
 
 The pilot SKILLs are on-demand (loaded by trigger phrase). Required:
-- Trigger phrase is in the message (e.g. `haiku`, `Haiku`, `Haiku mode`, `haiku-pilot`, `sonnet`, `Sonnet`, `Sonnet mode`, `sonnet-pilot`)
+- Trigger phrase is in the message (e.g. `haiku`, `Haiku`, `Haiku mode`, `haiku-pilot`, `sonnet`, `Sonnet`, `Sonnet mode`, `sonnet-pilot`, `opus`, `Opus`, `Opus mode`, `opus-pilot`)
 - The SKILL directory exists at `.claude/skills/<skill-name>/SKILL.md`
 - The SKILL frontmatter parses (no syntax errors)
 

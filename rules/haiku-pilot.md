@@ -6,7 +6,7 @@ tier: auto
 # Haiku Pilot — Default Haiku, Quantified Escalation
 
 > Source: AgentOpt (arxiv 2604.06296, 2026-04) + Augment Code AGENTS.md eval (2026-04-22).
-> Full playbook: `.claude/skills/haiku-pilot/SKILL.md` (trigger words: "Haiku mode", "full Haiku", "escalation gates", "Haiku Pilot").
+> Full playbook: `.claude/skills/haiku-pilot/SKILL.md` (trigger words: `haiku`, `Haiku`, `Haiku mode`, `haiku-pilot`).
 
 ## Thesis
 
