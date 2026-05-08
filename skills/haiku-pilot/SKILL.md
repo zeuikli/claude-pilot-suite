@@ -91,7 +91,7 @@ After drafting an answer that cites numbers, model names, or verbatim quotes, ru
 | Fabricated benchmark scores | Q12: "Opus+HumanLayer=55%, Haiku=40%" — neither in source |
 | Non-existent model version | Q13: "Claude 3.5 Opus" — no such Anthropic-published version |
 | Invented latency / token claims | Q17: "p99 < 100ms / 500K tokens" — not in P08 |
-| Vague paper-grounded targets | Q18: "失敗率 ↓ 60–80%" — paper has no such range |
+| Vague paper-grounded targets | Q18: "failure rate ↓ 60–80%" — paper has no such range |
 
 If any cited number fails grep, **rewrite that paragraph** before completion. **Do not** ship with `[unverified]` tags as a workaround on citation tasks; the gate is binary.
 

@@ -240,7 +240,7 @@ For wiki / reference / paper-citation tasks, every cited claim must:
 - Cross-paper number attribution without re-cite ("AgentOpt 74% on harness benchmarks" — actual: HotpotQA only).
 - Non-existent model versions ("Claude 3.5 Opus" — no such Anthropic-published version).
 - "Approximately X%" without paper anchor.
-- Vague targets ("失敗率 ↓ 60–80%") not paper-grounded.
+- Vague targets ("failure rate ↓ 60–80%") not paper-grounded.
 
 > **Empirical basis** (2026-05-06 v0.2.1 benchmark): haiku-pilot shipped 5 fabrications in 20 questions despite anchor enforcement; sonnet-pilot shipped 0 (Decision-Log gate caught them). Opus's confidence makes it equally susceptible to "this number sounds right" — Source-Verify is a binary gate, not a soft threshold.
 
